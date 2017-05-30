@@ -11,6 +11,7 @@
 	<script src="js/StereoEffect.js"></script>
 	<script src="js/DeviceOrientationControls.js"></script>
 	<script src="js/OrbitControls.js"></script>
+	<script src="js/gyronorm.js"></script>
 
 
 	// src="paintings.js"
@@ -61,20 +62,36 @@
       controls.noZoom = true;
       controls.noPan = true;
 
-      function setOrientationControls(e) {
-        if (!e.alpha) {
-          return;
-        }
+var gn = new GyroNorm();
+var args = {
+  //other settings here
+  screenAdjusted:true
+};
+gn.init(args).then(function(){
+  gn.start(function(data){
+    //Set the device orientation control values here
+    scope.deviceOrientation.alpha = data.do.alpha;
+    scope.deviceOrientation.beta = data.do.beta;
+    scope.deviceOrientation.gamma = data.do.gamma;
+  });
+}).catch(function(e){
+  // Catch if the DeviceOrientation or DeviceMotion is not supported by the browser or device
+});
 
-        controls = new THREE.DeviceOrientationControls(camera, true);
-        controls.connect();
-        controls.update();
-
-        element.addEventListener('click', fullscreen, false);
-
-        window.removeEventListener('deviceorientation', setOrientationControls, true);
-      }
-      window.addEventListener('deviceorientation', setOrientationControls, true);
+    //   function setOrientationControls(e) {
+    //     if (!e.alpha) {
+    //       return;
+    //     }
+	  //
+    //     controls = new THREE.DeviceOrientationControls(camera, true);
+    //     controls.connect();
+    //     controls.update();
+	  //
+    //     element.addEventListener('click', fullscreen, false);
+	  //
+    //     window.removeEventListener('deviceorientation', setOrientationControls, true);
+    //   }
+    //   window.addEventListener('deviceorientation', setOrientationControls, true);
 
 	  window.addEventListener('devicemotion', function (e) {
 	     ax = e.accelerationIncludingGravity.x * 10;
