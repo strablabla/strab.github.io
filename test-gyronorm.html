@@ -1,0 +1,31 @@
+<!doctype html>
+<html>
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+    <script src="js/gyronorm.js"></script>
+    <title></title>
+</head>
+<body>
+    <div id="main">
+        <div class="stats" style="position:absolute; left:0;top:0; color:red;"></div>
+    </div>
+
+<script type="text/javascript">
+    var gn = new GyroNorm();
+    gn.init().then(function(){
+        alert('success');
+        gn.start(function(data){
+
+                    $(".stats").html(
+                        'alpha: '+data.do.alpha+', beta:'+data.do.beta+', gamma:'+data.do.gamma
+                    );
+        });
+    }).catch(function(e){
+        alert(e);
+    });
+</script>
+</body>
+</html>
