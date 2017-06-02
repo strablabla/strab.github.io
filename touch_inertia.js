@@ -89,9 +89,7 @@ window.onload = function(event) {
         controls = new THREE.DeviceOrientationControls(camera, true);
         controls.connect();
         controls.update();
-
         element.addEventListener('click', fullscreen, false);
-
         window.removeEventListener('deviceorientation', setOrientationControls, true);
       }
       window.addEventListener('deviceorientation', setOrientationControls, true);
@@ -163,29 +161,6 @@ window.onload = function(event) {
       floorMesh.rotation.x = -Math.PI / 2.0;
       scene.add( floorMesh );
 
-    //   var texture = THREE.ImageUtils.loadTexture(
-    //     'texture/checker.png'
-    //   );
-    //   texture.wrapS = THREE.RepeatWrapping;
-    //   texture.wrapT = THREE.RepeatWrapping;
-    //   texture.repeat = new THREE.Vector2(50, 50);
-    //   texture.anisotropy = renderer.getMaxAnisotropy();
-      //
-    //   var material = new THREE.MeshPhongMaterial({
-    //     color: 0xffffff,
-    //     specular: 0xffffff,
-    //     shininess: 20,
-    //     shading: THREE.FlatShading,
-    //     map: texture
-    //   });
-      //
-    //   var geometry = new THREE.PlaneGeometry(1000, 1000);
-      //
-    //   var mesh = new THREE.Mesh(geometry, material);
-    //   mesh.rotation.x = -Math.PI / 2;
-    //   scene.add(mesh);
-
-
       list_cubes = []
 
       for (i=0; i<100; i++){
@@ -236,7 +211,7 @@ window.onload = function(event) {
 
       if (moving){
           var direction = camera.getWorldDirection();
-          distance = 10;
+          distance = 2;
           camera.position.add( direction.multiplyScalar(distance) );
       }
 
