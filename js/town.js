@@ -24,7 +24,8 @@ var simple_colored_buildings = function(nb_buildings, esp, dist_inter_build){
 
 		}
 
-		var material = new THREE.MeshBasicMaterial( { vertexColors: THREE.FaceColors, overdraw: 0.5 } );
+		//var material = new THREE.MeshBasicMaterial( { vertexColors: THREE.FaceColors, overdraw: 0.5 } );
+		var material = new THREE.MeshPhongMaterial( { vertexColors: THREE.FaceColors, overdraw: 0.5, roughness: 0.5, metalness: 1.0 } );
 
 		for ( var i = 0; i < 7; i ++ ) {
 
