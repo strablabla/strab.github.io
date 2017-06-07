@@ -94,7 +94,7 @@ window.onload = function(event) {
 
       // LIGHTS
 
-      var intensity = 1000; //2.5;
+      var intensity = 100000; //2.5;
       var distance = 100;
       var decay = 2.0;
 
