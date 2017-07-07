@@ -20,8 +20,7 @@ function tableau(txt, size,  x, z, y, roty){
     tabl.position.z = +z;
     tabl.rotation.y += roty;
     tabl.position.y = y; //hauteur
-    return tabl
-    //scene.add(tabl);
+    scene.add(tabl);
 }
 
 function make_ground(pic, size, level) {
