@@ -120,17 +120,13 @@ window.onload = function(event) {
     hc.castShadow = true;
     hc.receiveShadow = false;
 
-
-    // Tableaux
-    size_tab = 250;
-    var sep_tab = 250;
-    height_tab = 300
-    var tabl1 = tableau('paintings/DeStael.jpg', size_tab, 0 , -600, height_tab, 0);
+    size_tab = 500;
+    var sep_tab = 500;
+    var tabl1 = tableau('paintings/Picasso/guernica.jpg', size_tab, 0 , -600, 250, 0);
     scene.add(tabl1)
-    var tabl2 = tableau('paintings/queensborough-bridge.jpg', size_tab, 500 , 0, height_tab, -Math.PI/2.0);
+    var tabl2 = tableau('paintings/Picasso/madone.jpg', size_tab, 500 , 0, 270, -Math.PI/2.0);
     scene.add(tabl2)
-    var tabl3 = tableau('paintings/valley-of-the-seine.jpg', size_tab, 0 , 600, height_tab, Math.PI);
-    scene.add(tabl3);
+
 
 
       hemiLight = new THREE.HemisphereLight(0xffffff, 0x000000, 0.6 );
