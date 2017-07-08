@@ -239,7 +239,7 @@ window.onload = function(event) {
           //var direction = camera.getWorldDirection();
           distance = moving_speed;
           //camera.position.add( direction.multiplyScalar(distance) );
-          camera.position.z.add( dir_moving*distance );
+          camera.position.z += dir_moving*distance ;
       }
 
     //   param_bulb += 0.02
