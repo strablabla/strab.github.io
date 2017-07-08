@@ -9,6 +9,7 @@ window.onload = function(event) {
     var size_bulb = 20
     var param_bulb = 0
     var moving = false
+    var moving_speed = 20; 
 
     // ref for lumens: http://www.power-sure.com/lumens.htm
     var bulbLuminousPowers = {
@@ -252,7 +253,7 @@ window.onload = function(event) {
 
       if (moving){
           var direction = camera.getWorldDirection();
-          distance = 2;
+          distance = moving_speed;
           camera.position.add( direction.multiplyScalar(distance) );
       }
 
