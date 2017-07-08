@@ -9,7 +9,7 @@ window.onload = function(event) {
     var size_bulb = 20
     var param_bulb = 0
     var moving = false
-    var moving_speed = 20;
+    var moving_speed = 10;
 
     // ref for lumens: http://www.power-sure.com/lumens.htm
     var bulbLuminousPowers = {
@@ -121,12 +121,13 @@ window.onload = function(event) {
     hc.receiveShadow = false;
 
     size_tab = 500;
-    var sep_tab = 500;
-    var tabl1 = tableau('paintings/DeStael.jpg', size_tab, 0 , -600, 250, 0);
+    var sep_tab = 250;
+    height_tab = 300
+    var tabl1 = tableau('paintings/DeStael.jpg', size_tab, 0 , -600, height_tab, 0);
     scene.add(tabl1)
-    var tabl2 = tableau('paintings/queensborough-bridge.jpg', size_tab, 500 , 0, 270, -Math.PI/2.0);
+    var tabl2 = tableau('paintings/queensborough-bridge.jpg', size_tab, 500 , 0, height_tab, -Math.PI/2.0);
     scene.add(tabl2)
-    var tabl3 = tableau('paintings/valley-of-the-seine.jpg', size_tab, 0 , 600, 250, Math.PI);
+    var tabl3 = tableau('paintings/valley-of-the-seine.jpg', size_tab, 0 , 600, height_tab, Math.PI);
     scene.add(tabl3);
 
 
