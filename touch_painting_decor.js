@@ -9,7 +9,7 @@ window.onload = function(event) {
     var size_bulb = 20
     var param_bulb = 0
     var moving = false
-    var moving_speed = 20; 
+    var moving_speed = 20;
 
     // ref for lumens: http://www.power-sure.com/lumens.htm
     var bulbLuminousPowers = {
@@ -65,9 +65,9 @@ window.onload = function(event) {
       effect = new THREE.StereoEffect(renderer);
 
       scene = new THREE.Scene();
-      scene.fog = new THREE.Fog( 0xffffff, 0, 1000 );
+      scene.fog = new THREE.Fog( 0xffffff, 0, 4000 );
 
-      camera = new THREE.PerspectiveCamera(90, window.innerWidth/window.innerHeight, 0.01, 1000);
+      camera = new THREE.PerspectiveCamera(90, window.innerWidth/window.innerHeight, 0.01, 10000);
       //camera.position.set(-500, 400, -200);
       camera.position.set(dist/2, dist/2, dist/2);
       scene.add(camera);
@@ -104,35 +104,32 @@ window.onload = function(event) {
         emissiveIntensity: 10000,
         color: 0x000000
     });
-    for (i=0; i<4; i++){
+    for (i=0; i<2; i++){
           var bulbGeometry = new THREE.SphereGeometry( size_bulb, 16, 8 );
           bulbLight = new THREE.PointLight( 0xffee88, 100, 2000); //, 500
           bulbLight.add( new THREE.Mesh( bulbGeometry, bulbMat ) );
           bulbLight.castShadow = true;
-          bulbLight.position.set( Math.random()*300, 150, Math.random()*300 );
+          bulbLight.position.set( -400, 150, 300*Math.pow(-1,i) );
           list_bulbs.push(bulbLight)
           scene.add( bulbLight );
     }
 
+    var hc = hollow_cube_sphere(50, 'white')
+    hc.position.set(0,0,0)
+    scene.add(hc);
+    hc.castShadow = true;
+    hc.receiveShadow = false;
+
     size_tab = 500;
     var sep_tab = 500;
-    //make_ground_repetitive('Decor/marbre_sol.jpg', 1000, 0)
-    var tabl1 = tableau('paintings/DeStael.jpg', size_tab, sep_tab , -300, 250, 0);
+    var tabl1 = tableau('paintings/DeStael.jpg', size_tab, 0 , -600, 250, 0);
     scene.add(tabl1)
-    var tabl2 = tableau('paintings/queensborough-bridge.jpg', size_tab, sep_tab , 300, 250, 0);
+    var tabl2 = tableau('paintings/queensborough-bridge.jpg', size_tab, 500 , 0, 270, -Math.PI/2.0);
     scene.add(tabl2)
-    var tabl3 = tableau('paintings/valley-of-the-seine.jpg', size_tab, sep_tab , 300, 250, 200);
-    scene.add(tabl3)
+    var tabl3 = tableau('paintings/valley-of-the-seine.jpg', size_tab, 0 , 600, 250, Math.PI);
+    scene.add(tabl3);
 
-    //tableau('Bosch/Vision_de_Tondal.jpg', -size_tab, -sep_tab/2 , -500, 50, 0)
 
-    //   var light = new THREE.HemisphereLight(0x777777, 0x000000, 0.6);
-    //   //var light = new THREE.HemisphereLight( 0xeeeeff, 0x777788, 0.75 );
-    //   //var light = new THREE.HemisphereLight(0xffffff, 0xffffff, 0.6);
-    //   scene.add(light);
-
-    //   hemiLight = new THREE.HemisphereLight( 0xddeeff, 0x0f0e0d, 0.02 );
-    //   scene.add( hemiLight );
       hemiLight = new THREE.HemisphereLight(0xffffff, 0x000000, 0.6 );
       scene.add( hemiLight );
 
@@ -175,6 +172,7 @@ window.onload = function(event) {
       floorMesh.receiveShadow = true;
       floorMesh.rotation.x = -Math.PI / 2.0;
       scene.add( floorMesh );
+      //object3d.receiveShadow = false;
 
     //   var texture = THREE.ImageUtils.loadTexture(
     //     'texture/checker.png'
@@ -192,26 +190,16 @@ window.onload = function(event) {
     //     map: texture
     //   });
       //
-    //   var geometry = new THREE.PlaneGeometry(1000, 1000);
-      //
-    //   var mesh = new THREE.Mesh(geometry, material);
-    //   mesh.rotation.x = -Math.PI / 2;
-    //   scene.add(mesh);
+
+      var ceiling = new THREE.Mesh(new THREE.PlaneBufferGeometry(300, 300), new THREE.MeshPhongMaterial({specular: '#fff',fog: false, opacity: 0.3, color: '#ff9a00',shininess: 10 }));
+
+      ceiling.rotation.x = Math.PI/2
+      ceiling.position.set(0,400,0)
+      ceiling.material.color.setHex( 0xffffff );
+
+      scene.add(ceiling);
 
 
-      list_cubes = []
-
-    //   for (i=0; i<100; i++){
-      //
-    //       cube = new THREE.Mesh( new THREE.CubeGeometry( size_cube, size_cube, size_cube ), new THREE.MeshNormalMaterial() );
-    //       //alert(Math.random())
-    //       cube.position.y = Math.random()*dist; //*Math.power(-1,i);
-    //       cube.position.z = Math.random()*dist;
-    //       cube.position.x = Math.random()*dist;
-      //
-    //       list_cubes.push(cube)
-    //       scene.add(cube);
-    //   }
 
       window.addEventListener('resize', resize, false);
       setTimeout(resize, 1);
