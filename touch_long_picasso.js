@@ -205,7 +205,7 @@ window.onload = function(event) {
 
       window.addEventListener('touchstart', function() {
           moving = !moving
-          if (moving){dir_moving = -dir_moving}
+          if (!moving){dir_moving = -dir_moving}
          }); // end touchstart
     }
 
@@ -237,9 +237,9 @@ window.onload = function(event) {
 
       if (moving){
           //var direction = camera.getWorldDirection();
-          distance = moving_speed;
+          //distance = moving_speed;
           //camera.position.add( direction.multiplyScalar(distance) );
-          camera.position.z += dir_moving*distance ;
+          camera.position.z += dir_moving*moving_speed*10 ;
       }
 
     //   param_bulb += 0.02
