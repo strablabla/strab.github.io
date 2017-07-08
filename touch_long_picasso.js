@@ -10,6 +10,7 @@ window.onload = function(event) {
     var param_bulb = 0
     var moving = false
     var moving_speed = 10;
+    var dir_moving = 1
 
     // ref for lumens: http://www.power-sure.com/lumens.htm
     var bulbLuminousPowers = {
@@ -127,9 +128,7 @@ window.onload = function(event) {
     for (i=0; i<list_tabl.length; i++){
         all_tabl.push(tableau('paintings/Picasso/' + list_tabl[i] + '.jpg', size_tab, 500 , -600*i, 250, -Math.PI/2.0));
         scene.add(all_tabl[i])
-
     }
-
 
       hemiLight = new THREE.HemisphereLight(0xffffff, 0x000000, 0.6 );
       scene.add( hemiLight );
@@ -201,13 +200,12 @@ window.onload = function(event) {
 
       scene.add(ceiling);
 
-
-
       window.addEventListener('resize', resize, false);
       setTimeout(resize, 1);
 
       window.addEventListener('touchstart', function() {
           moving = !moving
+          if (moving){dir_moving = -dir_moving}
          }); // end touchstart
     }
 
@@ -223,15 +221,11 @@ window.onload = function(event) {
 
     function update(dt) {
       resize();
-
       camera.updateProjectionMatrix();
-
       controls.update(dt);
     }
 
-
     var previousShadowMap = false;
-
     function render(dt) {
 
     //   for (i in list_cubes){
@@ -242,11 +236,11 @@ window.onload = function(event) {
     //   }
 
       if (moving){
-          var direction = camera.getWorldDirection();
+          //var direction = camera.getWorldDirection();
           distance = moving_speed;
-          camera.position.add( direction.multiplyScalar(distance) );
+          //camera.position.add( direction.multiplyScalar(distance) );
+          camera.position.z.add( dir_moving*distance );
       }
-
 
     //   param_bulb += 0.02
     //   for (i in list_bulbs){
@@ -265,14 +259,10 @@ window.onload = function(event) {
           previousShadowMap = params.shadows;
       }
 
-
       bulbMat.emissiveIntensity = bulbLight.intensity / Math.pow( 0.02, 2.0 ); // convert from intensity to irradiance at bulb surface
-
       hemiLight.intensity = hemiLuminousIrradiances[ params.hemiIrradiance ];
-
       effect.render(scene, camera);
     }
-
 
     function animate(t) {
       requestAnimationFrame(animate);
