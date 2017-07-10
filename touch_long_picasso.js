@@ -10,7 +10,7 @@ window.onload = function(event) {
     var param_bulb = 0
     var moving = false
     var moving_speed = 10;
-    var dir_moving = 1
+    //var dir_moving = 1
 
     // ref for lumens: http://www.power-sure.com/lumens.htm
     var bulbLuminousPowers = {
@@ -205,7 +205,7 @@ window.onload = function(event) {
 
       window.addEventListener('touchstart', function() {
           moving = !moving
-          if (!moving){dir_moving = -dir_moving}
+          //if (!moving){dir_moving = -dir_moving}
          }); // end touchstart
     }
 
@@ -236,9 +236,10 @@ window.onload = function(event) {
     //   }
 
       if (moving){
-          //var direction = camera.getWorldDirection();
+          var direction = camera.getWorldDirection();
           //distance = moving_speed;
           //camera.position.add( direction.multiplyScalar(distance) );
+          var dir_moving = Math.sign(direction.z)
           camera.position.z += dir_moving*moving_speed*2.5 ;
       }
 
