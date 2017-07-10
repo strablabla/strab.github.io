@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Test using Three.js to build a VR experience</title>
+	<!-- <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> -->
+    <!-- <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"> -->
+
+	<script src="js/three.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/soundmanager2/2.97a.20150601/script/soundmanager2-jsmin.js"></script>
+	<script src="js/StereoEffect.js"></script>
+	<script src="js/DeviceOrientationControls.js"></script>
+	<script src="js/OrbitControls.js"></script>
+	<script src="js/gallery_objects.js"></script>
+	<script src="js/ThreeCSG.js"></script>
+
+	<script src="touch_long_turner.js"></script>
+	<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+	<div id="container"></div>
+</body>
+<script>
+soundManager.setup({
+  url: '/path/to/swf-files/',
+  onready: function() {
+	var mySound = soundManager.createSound({
+	  id: 'aSound',
+	  //url: '/home/lio/Téléchargements/youtube/zic/Oriental/Souad_Massi_Ya Kalbi.mp4'
+	  url: "musique/Chris Joss - Keep On Digging.mp4"
+	});
+	mySound.play();
+  },
+  ontimeout: function() {
+	// Hrmm, SM2 could not start. Missing SWF? Flash blocked? Show an error, etc.?
+  }
+});
+</script>
+</html>
