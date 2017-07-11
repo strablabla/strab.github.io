@@ -208,6 +208,32 @@ window.onload = function(event) {
 
       scene.add(bord);
 
+      //-------------
+      wallMat = new THREE.MeshStandardMaterial ( {
+          roughness: 0.8,
+          color: 0xffffff,
+          metalness: 0.2,
+          bumpScale: 0.005
+      });
+      var wall_repeaty = 10;
+      var textureLoader = new THREE.TextureLoader();
+      textureLoader.load( "textures/brick_diffuse.jpg", function( map ) {
+          map.wrapS = THREE.RepeatWrapping;
+          map.wrapT = THREE.RepeatWrapping;
+          map.anisotropy = 4;
+          map.repeat.set( 5,wall_repeaty );
+          wallMat.map = map;
+          wallMat.needsUpdate = true;
+      } );
+
+      var wall = new THREE.Mesh(new THREE.CubeGeometry(20, 4000, 1000), wallMat);
+
+      wall.rotation.x = Math.PI/2
+      wall.position.set(550, 10,-1800)
+      //wall.material.color.setHex( 0xffffff );
+
+      scene.add(wall);
+
       //import_collada('dae/DropChair.DAE', [10,10,10], [0,0,0], [-Math.PI/2.0,0,0])
 
       window.addEventListener('resize', resize, false);
