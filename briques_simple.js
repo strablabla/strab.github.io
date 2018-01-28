@@ -49,8 +49,6 @@ window.onload = function(event) {
 
     var clock = new THREE.Clock();
 
-
-
     function init() {
 
       renderer = new THREE.WebGLRenderer();
@@ -110,15 +108,24 @@ window.onload = function(event) {
         emissiveIntensity: 1,
         color: 0x000000
        });
-    for (i=0; i<10; i++){
-          var bulbGeometry = new THREE.SphereGeometry( size_bulb, 16, 8 );
-          bulbLight = new THREE.PointLight( 0xffee88, 1, 100, 2 );
-          bulbLight.add( new THREE.Mesh( bulbGeometry, bulbMat ) );
-          bulbLight.castShadow = true;
-          bulbLight.position.set( Math.random()*300, Math.random()*300, 100 );
-          list_bulbs.push(bulbLight)
-          scene.add( bulbLight );
-    }
+    // for (i=0; i<10; i++){
+    //       var bulbGeometry = new THREE.SphereGeometry( size_bulb, 16, 8 );
+    //       bulbLight = new THREE.PointLight( 0xffee88, 1, 100, 2 );
+    //       bulbLight.add( new THREE.Mesh( bulbGeometry, bulbMat ) );
+    //       bulbLight.castShadow = true;
+    //       bulbLight.position.set( Math.random()*300, Math.random()*300, 100 );
+    //       list_bulbs.push(bulbLight)
+    //       scene.add( bulbLight );
+    // }
+
+
+      var bulbGeometry = new THREE.SphereGeometry( size_bulb, 16, 8 );
+      bulbLight = new THREE.PointLight( 0xffee88, 1, 100, 2 );
+      bulbLight.add( new THREE.Mesh( bulbGeometry, bulbMat ) );
+      bulbLight.castShadow = true;
+      bulbLight.position.set( 60, 50, -60 );
+      list_bulbs.push(bulbLight)
+      scene.add( bulbLight );
 
     // Sky
 
@@ -130,7 +137,7 @@ window.onload = function(event) {
       var nb_buildings = 100
       var esp = 100
       var dist_inter_build = 1500
-      simple_colored_buildings(nb_buildings, esp, dist_inter_build)
+      building_with_brick(nb_buildings, esp, dist_inter_build)
 
       make_ground(3000)
 
