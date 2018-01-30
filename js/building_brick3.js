@@ -1,7 +1,7 @@
 
 function tableau(txt, size,  x, z, y, roty){
     // on créé un  plan pour lequel on définit un matériau puis on l’ajoute à la scène
-    var geom = new THREE.PlaneGeometry( size, size, 2);
+    var geom = new THREE.PlaneGeometry( size, size, 5);
     var texture = new THREE.TextureLoader().load( txt );
     var mat= new THREE.MeshBasicMaterial( { map: texture, overdraw: true } );
     var tabl = new THREE.Mesh( geom, mat); // , new THREE.SphericalReflectionMapping()
@@ -264,7 +264,7 @@ var building3 = function(){
 		group.add( ceil12 );
 		group.add( ceil13 );
 
-		size_tab = 40;
+		size_tab = 20;
 		var sep_tab = 50;
 		list_tabl = [0, 1, 2 , 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19]
 		all_tabl = []
@@ -285,7 +285,7 @@ var building3 = function(){
 
 
 	    for (i=0; i<list_tabl.length; i++){
-	        all_tabl.push(tableau('paintings/impressionnistes/' + list_tabl[i] + '.jpg', size_tab, 2*sz-5 , -3*sz-i*sz, 30, -Math.PI/2.0));
+	        all_tabl.push(tableau('paintings/impressionnistes/' + list_tabl[i] + '.jpg', size_tab, 2*sz-10 , -3*sz-i*sz, 50, -Math.PI/2.0));
 	        scene.add(all_tabl[i])
 	    }
 
