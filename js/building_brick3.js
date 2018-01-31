@@ -1,4 +1,31 @@
 
+function import_collada(addr, scale, position, rotation){ // import collada files
+    loader = new THREE.ColladaLoader();
+    loader.load(addr, function(collada) {
+      collada.scene.scale.set(scale[0],scale[1],scale[2]);
+      collada.scene.position.x = position[0];
+      collada.scene.position.y = position[1];
+      collada.scene.position.z = position[2];
+      collada.scene.rotation.x = rotation[0];
+      scene.add(collada.scene)
+    })
+}// end import_collada
+
+function some_cube(txt, size,  x, z, y, roty){
+    // on créé un  plan pour lequel on définit un matériau puis on l’ajoute à la scène
+    var geom = new THREE.PlaneGeometry( size, size, size);
+    var texture = new THREE.TextureLoader().load( txt );
+    var mat= new THREE.MeshBasicMaterial( { map: texture, overdraw: true } );
+    var tabl = new THREE.Mesh( geom, mat); // , new THREE.SphericalReflectionMapping()
+
+    tabl.position.x = +x;
+    tabl.position.z = +z;
+    tabl.rotation.y += roty;
+    tabl.position.y = y; //hauteur
+    return tabl
+    //scene.add(tabl);
+}
+
 function tableau(txt, size,  x, z, y, roty){
     // on créé un  plan pour lequel on définit un matériau puis on l’ajoute à la scène
     var geom = new THREE.PlaneGeometry( size, size, 5);
@@ -31,7 +58,7 @@ var bulblight = function(x,y,z){
 	  return bulbLight
 }
 
-var scale = function(rot, posx, posy, posz, heighty){
+var scale = function(rot, posx, posy, posz, heighty, nbscales){
 	//Scale
 	/*
 
@@ -50,7 +77,7 @@ var scale = function(rot, posx, posy, posz, heighty){
 	step0 = new THREE.Mesh( geom_step, material_step )
 
 	step0.position.set(sx,sy,sz);
-	for ( i=0;i<15;i++){
+	for ( i=0;i<nbscales;i++){
 		step = step0.clone()
 		step.position.set(sx,sy+hstep*i,sz+lstep*i);
 		group_scale.add( step );
@@ -72,8 +99,10 @@ var building3 = function(){
 
 		//------- Scale
 
-		scale(3*Math.PI / 2, 420,0,0, 0)
-		scale(3*Math.PI / 2, 420,0,-120, 0)
+		scale(3*Math.PI / 2, 420,0,0, 0, 15)
+		scale(3*Math.PI / 2, 420,0,-120, 0, 15)
+        scale(Math.PI / 2, -150,0,0, 0, 15)
+        scale(Math.PI / 2, -150,0,-120, 0, 15)
 
 		//------- Building
 
@@ -93,6 +122,12 @@ var building3 = function(){
 		var geom_floor = new THREE.CubeGeometry( 50, 7, 50 )
 		var material_floor = new THREE.MeshBasicMaterial({ map: THREE.ImageUtils.loadTexture("textures/hardwood2_diffuse.jpg") })
 		floor_wood0 = new THREE.Mesh( geom_floor, material_floor )
+
+        //------ cube
+        scube = 10
+        var geom_cube = new THREE.CubeGeometry( scube, scube, scube )
+		var material_cube = new THREE.MeshBasicMaterial({ map: THREE.ImageUtils.loadTexture("textures/roughness_map.jpg") })
+		cube0 = new THREE.Mesh( geom_cube, material_cube )
 
 		//------ Ceil first stage
 
@@ -288,6 +323,24 @@ var building3 = function(){
 	        all_tabl.push(tableau('paintings/impressionnistes/' + list_tabl[i] + '.jpg', size_tab, 2*sz-10 , -3*sz-i*sz, 50, -Math.PI/2.0));
 	        scene.add(all_tabl[i])
 	    }
+
+        //----- Cubes
+
+        cube1 = cube0.clone()
+        cube1.position.set(0,80,-150);
+        cube2 = cube0.clone()
+        cube2.position.set(50,140,-150);
+        cube3 = cube0.clone()
+        cube3.position.set(100,140,-170);
+        cube4 = cube0.clone()
+        cube4.position.set(20,140,-50);
+        group.add( cube1 );
+        group.add( cube2 );
+        group.add( cube3 );
+        group.add( cube4 );
+        var pihalf = Math.PI/2
+
+        import_collada('dae/vase4.dae', [20,20,20], [0,0,100], [-pihalf,0,0])                   // vase
 
 
 
