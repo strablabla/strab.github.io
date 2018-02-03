@@ -11,6 +11,15 @@ function import_collada(addr, scale, position, rotation){ // import collada file
     })
 }// end import_collada
 
+function tapestry(txt, size,  x, y, z, angle){
+      var geom_cube = new THREE.CubeGeometry( 2*size, 0.3, size )
+      var material_cube = new THREE.MeshBasicMaterial({ map: THREE.ImageUtils.loadTexture(txt) })
+      var cube = new THREE.Mesh( geom_cube, material_cube )
+      cube.position.set(x, y, z)
+      cube.rotation.set(0, Math.PI/180*angle, 0)
+      scene.add(cube)
+}
+
 
 function column_torsed(txt, size,  x, y, z, nbcubes){
       var geom_cube = new THREE.CubeGeometry( size, size, size )
@@ -319,20 +328,19 @@ var building3 = function(){
 		list_tabl = [0, 1, 2 , 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19]
 		all_tabl = []
 
-        for (i=0; i<40;i++){
-			wall_corr0 = wall0.clone()
-			wall_corr1 = wall0.clone()
-			floor_corr0 = floor_wood0.clone()
-			floor_corr1 = floor_wood0.clone()
-			wall_corr0.position.set(sz, sz , -3*sz-i*sz);
-			wall_corr1.position.set(2*sz, sz , -3*sz-i*sz);
-			floor_corr0.position.set(3*sz/2, 7 , -3*sz-i*sz);
-			floor_corr1.position.set(5*sz/2, 7 , -3*sz-i*sz);
-			group.add( wall_corr0 );
-			group.add( wall_corr1 );
-			group.add( floor_corr0 );
+    for (i=0; i<40;i++){
+  			wall_corr0 = wall0.clone()
+  			wall_corr1 = wall0.clone()
+  			floor_corr0 = floor_wood0.clone()
+  			floor_corr1 = floor_wood0.clone()
+  			wall_corr0.position.set(sz, sz/2 , -3*sz-i*sz);
+  			wall_corr1.position.set(2*sz, sz , -3*sz-i*sz);
+  			floor_corr0.position.set(3*sz/2, 11 , -3*sz-i*sz);
+  			floor_corr1.position.set(5*sz/2, 11 , -3*sz-i*sz);
+  			group.add( wall_corr0 );
+  			group.add( wall_corr1 );
+  			group.add( floor_corr0 );
 		}
-
 
 	    for (i=0; i<list_tabl.length; i++){
 	        all_tabl.push(tableau('paintings/impressionnistes/' + list_tabl[i] + '.jpg', size_tab, 2*sz-10 , -3*sz-i*sz, 50, -Math.PI/2.0));
@@ -359,6 +367,8 @@ var building3 = function(){
 
         column_torsed("texture/adesivo-de-parede-azulejos-05-cozinha.jpg", 5, 0,0,30, 10)
         column_torsed("texture/adesivo-de-parede-azulejos-05-cozinha.jpg", 5, 20,0,30, 10)
+        column_torsed("texture/adesivo-de-parede-azulejos-05-cozinha.jpg", 5, 0, 70, -170, 16)
+        tapestry("texture/tapis.jpg", 20,  50, 80, -150, 0)
 
 
 
