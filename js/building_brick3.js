@@ -11,19 +11,34 @@ function import_collada(addr, scale, position, rotation){ // import collada file
     })
 }// end import_collada
 
+
+function column_torsed(txt, size,  x, y, z, nbcubes){
+      var geom_cube = new THREE.CubeGeometry( size, size, size )
+      var material_cube = new THREE.MeshBasicMaterial({ map: THREE.ImageUtils.loadTexture(txt) })
+      cube = new THREE.Mesh( geom_cube, material_cube )
+      cube.position.set(x, y, z)
+
+      for (i=0;i<nbcubes;i++){
+        newcube = cube.clone()
+        newcube.rotation.set(0, Math.PI/10*i, 0)
+        newcube.position.y = y+i*size
+        scene.add(newcube)
+      }
+}
+
 function some_cube(txt, size,  x, z, y, roty){
     // on créé un  plan pour lequel on définit un matériau puis on l’ajoute à la scène
     var geom = new THREE.PlaneGeometry( size, size, size);
     var texture = new THREE.TextureLoader().load( txt );
     var mat= new THREE.MeshBasicMaterial( { map: texture, overdraw: true } );
-    var tabl = new THREE.Mesh( geom, mat); // , new THREE.SphericalReflectionMapping()
+    var cube = new THREE.Mesh( geom, mat); // , new THREE.SphericalReflectionMapping()
 
-    tabl.position.x = +x;
-    tabl.position.z = +z;
-    tabl.rotation.y += roty;
-    tabl.position.y = y; //hauteur
-    return tabl
-    //scene.add(tabl);
+    cube.position.x = +x;
+    cube.position.z = +z;
+    cube.rotation.y += roty;
+    cube.position.y = y; //hauteur
+    return cube
+
 }
 
 function tableau(txt, size,  x, z, y, roty){
@@ -123,9 +138,9 @@ var building3 = function(){
 		var material_floor = new THREE.MeshBasicMaterial({ map: THREE.ImageUtils.loadTexture("textures/hardwood2_diffuse.jpg") })
 		floor_wood0 = new THREE.Mesh( geom_floor, material_floor )
 
-        //------ cube
-        scube = 10
-        var geom_cube = new THREE.CubeGeometry( scube, scube, scube )
+    //------ cube
+    scube = 10
+    var geom_cube = new THREE.CubeGeometry( scube, scube, scube )
 		var material_cube = new THREE.MeshBasicMaterial({ map: THREE.ImageUtils.loadTexture("textures/roughness_map.jpg") })
 		cube0 = new THREE.Mesh( geom_cube, material_cube )
 
@@ -340,7 +355,10 @@ var building3 = function(){
         group.add( cube4 );
         var pihalf = Math.PI/2
 
-        import_collada('dae/vase4.dae', [20,20,20], [0,0,100], [-pihalf,0,0])                   // vase
+        //import_collada('dae/vase4.dae', [20,20,20], [0,0,100], [-pihalf,0,0])
+
+        column_torsed("texture/adesivo-de-parede-azulejos-05-cozinha.jpg", 10, 0,0,30, 20)
+        column_torsed("texture/adesivo-de-parede-azulejos-05-cozinha.jpg", 10, 300,0,30, 20)
 
 
 

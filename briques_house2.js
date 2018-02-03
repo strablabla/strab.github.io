@@ -137,6 +137,7 @@ window.onload = function(event) {
       var esp = 100
       var dist_inter_build = 1500
       building3()
+      //make_road()
 
       make_ground(3000)
 
