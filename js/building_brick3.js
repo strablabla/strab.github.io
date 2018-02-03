@@ -20,7 +20,6 @@ function tapestry(txt, size,  x, y, z, angle){
       scene.add(cube)
 }
 
-
 function column_torsed(txt, size,  x, y, z, nbcubes){
       var geom_cube = new THREE.CubeGeometry( size, size, size )
       var material_cube = new THREE.MeshBasicMaterial({ map: THREE.ImageUtils.loadTexture(txt) })
@@ -365,10 +364,19 @@ var building3 = function(){
 
         //import_collada('dae/vase4.dae', [20,20,20], [0,0,100], [-pihalf,0,0])
 
-        column_torsed("texture/adesivo-de-parede-azulejos-05-cozinha.jpg", 5, 0,0,30, 10)
-        column_torsed("texture/adesivo-de-parede-azulejos-05-cozinha.jpg", 5, 20,0,30, 10)
-        column_torsed("texture/adesivo-de-parede-azulejos-05-cozinha.jpg", 5, 0, 70, -170, 16)
-        tapestry("texture/tapis.jpg", 20,  50, 80, -150, 0)
+        column_torsed("texture/adesivo-de-parede-azulejos-05-cozinha.jpg", 5, 45,0,29, 16) // door
+        column_torsed("texture/adesivo-de-parede-azulejos-05-cozinha.jpg", 5, 75,0,29, 16) // door
+        column_torsed("texture/adesivo-de-parede-azulejos-05-cozinha.jpg", 5, 120,0,29, 16) // door
+        column_torsed("texture/adesivo-de-parede-azulejos-05-cozinha.jpg", 5, 180,0,29, 16) // door
+        column_torsed("texture/adesivo-de-parede-azulejos-05-cozinha.jpg", 5, 10, 70, -170, 13)
+        column_torsed("texture/adesivo-de-parede-azulejos-05-cozinha.jpg", 5, 180, 70, -170, 13)
+        column_torsed("texture/adesivo-de-parede-azulejos-05-cozinha.jpg", 5, 30, 130, -170, 13)
+        column_torsed("texture/adesivo-de-parede-azulejos-05-cozinha.jpg", 5, 150, 130, -170, 13)
+        column_torsed("texture/adesivo-de-parede-azulejos-05-cozinha.jpg", 5, 170,70,-50, 13)
+        column_torsed("texture/adesivo-de-parede-azulejos-05-cozinha.jpg", 5, 0,70,-50, 13)
+        column_torsed("texture/adesivo-de-parede-azulejos-05-cozinha.jpg", 5, 30,130,-50, 13)
+        column_torsed("texture/adesivo-de-parede-azulejos-05-cozinha.jpg", 5, 180,130,-30, 13)
+        tapestry("texture/tapis.jpg", 20,  50, 75, -150, 0)
 
 
 
