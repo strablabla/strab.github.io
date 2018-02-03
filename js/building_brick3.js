@@ -357,8 +357,8 @@ var building3 = function(){
 
         //import_collada('dae/vase4.dae', [20,20,20], [0,0,100], [-pihalf,0,0])
 
-        column_torsed("texture/adesivo-de-parede-azulejos-05-cozinha.jpg", 5, 0,0,30, 20)
-        column_torsed("texture/adesivo-de-parede-azulejos-05-cozinha.jpg", 5, 20,0,30, 20)
+        column_torsed("texture/adesivo-de-parede-azulejos-05-cozinha.jpg", 5, 0,0,30, 10)
+        column_torsed("texture/adesivo-de-parede-azulejos-05-cozinha.jpg", 5, 20,0,30, 10)
 
 
 

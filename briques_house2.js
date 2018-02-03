@@ -66,7 +66,7 @@ window.onload = function(event) {
       renderer.gammaInput = true;
       renderer.gammaOutput = true;
       renderer.shadowMap.enabled = true;
-      //-------------
+      //-------------Fog
       element = renderer.domElement;
       container = document.getElementById('container');
       container.appendChild(element);
@@ -74,9 +74,12 @@ window.onload = function(event) {
       effect = new THREE.StereoEffect(renderer);
 
       scene = new THREE.Scene();
-      scene.fog = new THREE.Fog( 0xffffff, 0, 750 );
+      scene.fog = new THREE.Fog( 0xffffff, 0, 1000 );
       hemiLight = new THREE.HemisphereLight(0xffffff, 0x000000, 0.6);
       scene.add( hemiLight );
+
+      // var light = new THREE.AmbientLight( 0xffffff , 100000); // soft white light
+      // scene.add( light );
 
       camera = new THREE.PerspectiveCamera(90, window.innerWidth/window.innerHeight, 0.01, 10000);
       //camera.position.set(-500, 400, -200);
@@ -143,8 +146,12 @@ window.onload = function(event) {
       size_floor = 3000
       var geometry = new THREE.PlaneGeometry( size_floor, size_floor, 1, 1 );
       //var material = new THREE.MeshBasicMaterial( { color: 0x00ffff } );
-      var material = new THREE.MeshBasicMaterial( { color: 0x999966 } );
+      //var material = new THREE.MeshBasicMaterial( { color: 0x999966 } );
+      var material = new THREE.MeshBasicMaterial( { color: 0xff0066 } );
+
+      material.opacity = 0.001
       var floor = new THREE.Mesh( geometry, material );
+      floor.position.y = 20;
       floor.material.side = THREE.DoubleSide;
       floor.rotation.x = Math.PI/2;
       scene.add( floor );
