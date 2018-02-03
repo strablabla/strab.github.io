@@ -22,7 +22,9 @@ function tapestry(txt, size,  x, y, z, angle){
 
 function column_torsed(txt, size,  x, y, z, nbcubes){
       var geom_cube = new THREE.CubeGeometry( size, size, size )
-      var material_cube = new THREE.MeshBasicMaterial({ map: THREE.ImageUtils.loadTexture(txt) })
+      //var material_cube = new THREE.MeshBasicMaterial({ map: THREE.ImageUtils.loadTexture(txt) })
+      //var material_cube = new THREE.MeshBasicMaterial({ color: 0xffff00})
+      var material_cube = new THREE.MeshBasicMaterial({ color: 0xffffff})
       cube = new THREE.Mesh( geom_cube, material_cube )
       cube.position.set(x, y, z)
 
