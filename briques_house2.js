@@ -117,7 +117,6 @@ window.onload = function(event) {
        color: 0x000000
       });
 
-
      make_bulb(60, 50, -60)
      make_bulb(200, 50, -60)
      make_bulb(130, 120, -60)
@@ -139,7 +138,16 @@ window.onload = function(event) {
       building3()
       //make_road()
 
-      make_ground(3000)
+      //make_ground(3000)
+      /* Floor  */
+      size_floor = 3000
+      var geometry = new THREE.PlaneGeometry( size_floor, size_floor, 1, 1 );
+      //var material = new THREE.MeshBasicMaterial( { color: 0x00ffff } );
+      var material = new THREE.MeshBasicMaterial( { color: 0x999966 } );
+      var floor = new THREE.Mesh( geometry, material );
+      floor.material.side = THREE.DoubleSide;
+      floor.rotation.x = Math.PI/2;
+      scene.add( floor );
 
       window.addEventListener('resize', resize, false);
       setTimeout(resize, 1);
