@@ -2,7 +2,7 @@
 var camera, scene, renderer;
 var effect, controls;
 var element, container;
-var bulbLight, bulbMat, floorMat, hemiLight
+var bulbLight, bulbMat, groundMat, hemiLight
 var dist = 500
 var size_cube = 5
 var size_house_piece = 50
@@ -142,19 +142,19 @@ window.onload = function(event) {
       //make_road()
 
       //make_ground(3000)
-      /* Floor  */
-      size_floor = 3000
-      var geometry = new THREE.PlaneGeometry( size_floor, size_floor, 1, 1 );
+      /* ground  */
+      size_ground = 3000
+      var geometry = new THREE.PlaneGeometry( size_ground, size_ground, 1, 1 );
       //var material = new THREE.MeshBasicMaterial( { color: 0x00ffff } );
       //var material = new THREE.MeshBasicMaterial( { color: 0x999966 } );
-      var material = new THREE.MeshBasicMaterial( { color: 0xff0066 } );
+      var material = new THREE.MeshBasicMaterial( { color: 0xffeecc } );
 
       material.opacity = 0.001
-      var floor = new THREE.Mesh( geometry, material );
-      floor.position.y = 20;
-      floor.material.side = THREE.DoubleSide;
-      floor.rotation.x = Math.PI/2;
-      scene.add( floor );
+      var ground = new THREE.Mesh( geometry, material );
+      ground.position.y = 20;
+      ground.material.side = THREE.DoubleSide;
+      ground.rotation.x = Math.PI/2;
+      scene.add( ground );
 
       window.addEventListener('resize', resize, false);
       setTimeout(resize, 1);
@@ -195,7 +195,7 @@ window.onload = function(event) {
 
       if( params.shadows !== previousShadowMap ) {
         //   material.needsUpdate = true;
-          //floorMat.needsUpdate = true;
+          //groundMat.needsUpdate = true;
           previousShadowMap = params.shadows;
       }
 
