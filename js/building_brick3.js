@@ -21,10 +21,12 @@ function tapestry(txt, size,  x, y, z, angle){
 }
 
 function column_torsed(txt, size,  x, y, z, nbcubes){
+      var group_column = new THREE.Group();
+      scene.add( group_column );
       var geom_cube = new THREE.CubeGeometry( size, size, size )
-      //var material_cube = new THREE.MeshBasicMaterial({ map: THREE.ImageUtils.loadTexture(txt) })
+      var material_cube = new THREE.MeshBasicMaterial({ map: THREE.ImageUtils.loadTexture(txt) })
       //var material_cube = new THREE.MeshBasicMaterial({ color: 0xffff00})
-      var material_cube = new THREE.MeshBasicMaterial({ color: 0xffffff})
+      //var material_cube = new THREE.MeshBasicMaterial({ color: 0xffffff})
       cube = new THREE.Mesh( geom_cube, material_cube )
       cube.position.set(x, y, z)
 
@@ -32,8 +34,10 @@ function column_torsed(txt, size,  x, y, z, nbcubes){
         newcube = cube.clone()
         newcube.rotation.set(0, Math.PI/10*i, 0)
         newcube.position.y = y+i*size
-        scene.add(newcube)
+        group_column.add(newcube)
+        //scene.add(newcube)
       }
+      return group_column
 }
 
 function some_cube(txt, size,  x, z, y, roty){
@@ -365,19 +369,43 @@ var building3 = function(){
         var pihalf = Math.PI/2
 
         //import_collada('dae/vase4.dae', [20,20,20], [0,0,100], [-pihalf,0,0])
+        column_dic = {}
+        column_dic[0] = column_torsed("texture/adesivo-de-parede-azulejos-05-cozinha.jpg", 5, 45,0,29, 16) // door
+        column_dic[1] = column_dic[0].clone()
+        column_dic[1].position.set(30,0,0)
+        column_dic[2] = column_dic[0].clone()
+        column_dic[2].position.set(75,0,0)
+        column_dic[3] = column_dic[0].clone()
+        column_dic[3].position.set(130,0,0)
+        column_dic[4] = column_torsed("texture/adesivo-de-parede-azulejos-05-cozinha.jpg", 5, 10,70,-170, 13)
+        column_dic[5] = column_dic[4].clone()
+        column_dic[5].position.set(130,0,0)
+        column_dic[6] = column_dic[4].clone()
+        column_dic[6].position.set(30,60,-10)
+        column_dic[7] = column_dic[4].clone()
+        column_dic[7].position.set(120,60,-10)
+        column_dic[8] = column_dic[4].clone()
+        column_dic[8].position.set(170,60,150)
+        column_dic[9] = column_dic[4].clone()
+        column_dic[9].position.set(30,0,150)
+        column_dic[10] = column_dic[4].clone()
+        column_dic[10].position.set(150,0,130)
+        //---
+        column_dic[11] = column_dic[4].clone()
+        column_dic[11].position.set(20,60,150)
+        column_dic[12] = column_dic[4].clone()
+        column_dic[12].position.set(50,60,80)
+        for (i=0; i<13; i++){
+          group.add( column_dic[i] )
+        }
 
-        column_torsed("texture/adesivo-de-parede-azulejos-05-cozinha.jpg", 5, 45,0,29, 16) // door
-        column_torsed("texture/adesivo-de-parede-azulejos-05-cozinha.jpg", 5, 75,0,29, 16) // door
-        column_torsed("texture/adesivo-de-parede-azulejos-05-cozinha.jpg", 5, 120,0,29, 16) // door
-        column_torsed("texture/adesivo-de-parede-azulejos-05-cozinha.jpg", 5, 180,0,29, 16) // door
-        column_torsed("texture/adesivo-de-parede-azulejos-05-cozinha.jpg", 5, 10, 70, -170, 13)
-        column_torsed("texture/adesivo-de-parede-azulejos-05-cozinha.jpg", 5, 180, 70, -170, 13)
-        column_torsed("texture/adesivo-de-parede-azulejos-05-cozinha.jpg", 5, 30, 130, -170, 13)
-        column_torsed("texture/adesivo-de-parede-azulejos-05-cozinha.jpg", 5, 150, 130, -170, 13)
-        column_torsed("texture/adesivo-de-parede-azulejos-05-cozinha.jpg", 5, 170,70,-50, 13)
-        column_torsed("texture/adesivo-de-parede-azulejos-05-cozinha.jpg", 5, 0,70,-50, 13)
-        column_torsed("texture/adesivo-de-parede-azulejos-05-cozinha.jpg", 5, 30,130,-50, 13)
-        column_torsed("texture/adesivo-de-parede-azulejos-05-cozinha.jpg", 5, 180,130,-30, 13)
+        // column10 = column4.clone()
+        // column10.position.set(30,130,-50)
+        // column11 = column4.clone()
+        // column11.position.set(180,130,-30)
+
+
+
         tapestry("texture/tapis.jpg", 20,  50, 75, -150, 0)
 
 
