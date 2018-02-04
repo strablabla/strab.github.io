@@ -11,6 +11,26 @@ function import_collada(addr, scale, position, rotation){ // import collada file
     })
 }// end import_collada
 
+function persians(txt, size,  x, y, z, angle){
+    //------ wooden board
+    var geom_board = new THREE.CubeGeometry( 50, 7, 3 )
+    var material_board = new THREE.MeshBasicMaterial({ map: THREE.ImageUtils.loadTexture(txt) }) // "texture/latte0.jpg"
+    simple_board0 = new THREE.Mesh( geom_board, material_board )
+    dic_board = {}
+    scale_board = size
+    dic_board[0] = simple_board0.clone()
+    dic_board[0].position.set(x, y, z)  // 180,180,-10
+    dic_board[0].rotation.set(-Math.PI/3,angle,0)
+    dic_board[0].scale.set(scale_board,scale_board*0.1,scale_board)
+    // dic_board[1] = simple_board0.clone()
+    // dic_board[0] = simple_board0.clone()*
+    for (i=1; i<20; i++){
+      dic_board[i] = dic_board[0].clone()
+      dic_board[i].position.y = dic_board[0].position.y-2*i
+      group.add( dic_board[i] )
+    }
+}
+
 function tapestry(txt, size,  x, y, z, angle){
       var geom_cube = new THREE.CubeGeometry( 2*size, 0.3, size )
       var material_cube = new THREE.MeshBasicMaterial({ map: THREE.ImageUtils.loadTexture(txt) })
@@ -399,16 +419,11 @@ var building3 = function(){
           group.add( column_dic[i] )
         }
 
-        // column10 = column4.clone()
-        // column10.position.set(30,130,-50)
-        // column11 = column4.clone()
-        // column11.position.set(180,130,-30)
+        //-------------- Persians
 
-
+        persians("texture/latte0.jpg", 0.5, 180,180,-10, 0)
 
         tapestry("texture/tapis.jpg", 20,  50, 75, -150, 0)
 
 
-
-
-}
+} // end group building
