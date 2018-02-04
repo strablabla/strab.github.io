@@ -464,16 +464,18 @@ var building3 = function(){
 
         // Tableaux à l'intérieur
         dict_tabl_inside = {}
-        dict_tabl_inside[1] = tableau("paintings/Botero/Athenaeum.jpeg",50, 140,-115,50, 0)
-        dict_tabl_inside[2] = tableau("paintings/Botero/Fernando-Botero-painter.jpg",50, 110,-70,50, Math.PI/2)
-        dict_tabl_inside[3] = tableau("paintings/Botero/picnic.jpg",50, 265,-90,50, 3*Math.PI/2)
+        big_tabl_size = 35
+        dict_tabl_inside[1] = tableau("paintings/Botero/Athenaeum.jpeg",big_tabl_size, 140,-115,50, 0)
+        dict_tabl_inside[2] = tableau("paintings/Botero/Fernando-Botero-painter.jpg",big_tabl_size, 110,-70,50, Math.PI/2)
+        dict_tabl_inside[3] = tableau("paintings/Botero/picnic.jpg",big_tabl_size, 265,-90,50, 3*Math.PI/2)
         //dict_tabl_inside[4] = tableau("paintings/Botero/allant_au_lit.jpg",50, 265,-50,50, 3*Math.PI/2)
-        dict_tabl_inside[4] = tableau("paintings/Botero/family-scene.jpg",50, 265,-30,50, 3*Math.PI/2)
+        dict_tabl_inside[4] = tableau("paintings/Botero/family-scene.jpg",big_tabl_size, 265,-30,50, 3*Math.PI/2)
         //dict_tabl_inside[5] = tableau("paintings/Botero/allant_au_lit.jpg",25, 110,-25,50, Math.PI/2)
         dict_tabl_inside[5] = tableau("paintings/Botero/flamenco_rouge.jpg",25, 110,-20,50, Math.PI/2)
         dict_tabl_inside[6] = tableau("paintings/Botero/orch.jpg",30, 240,15,50, Math.PI)
         dict_tabl_inside[7] = tableau("paintings/Botero/in_street.jpg",30, 200,15,50, Math.PI)
-        dict_tabl_inside[8] = tableau("paintings/Botero/allant_au_lit.jpg",20, 115,15,50, Math.PI)
+        //dict_tabl_inside[8] = tableau("paintings/Botero/allant_au_lit.jpg",20, 115,15,50, Math.PI)
+        dict_tabl_inside[8] = tableau("paintings/Botero/tango-dancers.jpg",20, 115,15,50, Math.PI)
         dict_tabl_inside[9] = tableau("paintings/Botero/circus_flower-Fernando-Botero.jpg",30, 240,-115,50, 0)
         dict_tabl_inside[10] = tableau("paintings/Botero/self-portrait-with-sofia.jpg",20, 180,-115,50, 0)
 
