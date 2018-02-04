@@ -13,22 +13,25 @@ function import_collada(addr, scale, position, rotation){ // import collada file
 
 function persians(txt, size,  x, y, z, angle){
     //------ wooden board
+    var group_persian = new THREE.Group();
     var geom_board = new THREE.CubeGeometry( 50, 7, 3 )
     var material_board = new THREE.MeshBasicMaterial({ map: THREE.ImageUtils.loadTexture(txt) }) // "texture/latte0.jpg"
     simple_board0 = new THREE.Mesh( geom_board, material_board )
     dic_board = {}
     scale_board = size
     dic_board[0] = simple_board0.clone()
-    dic_board[0].position.set(x, y, z)  // 180,180,-10
     dic_board[0].rotation.set(-Math.PI/3,angle,0)
+    dic_board[0].position.set(x, y, z)  // 180,180,-10
+
     dic_board[0].scale.set(scale_board,scale_board*0.1,scale_board)
     // dic_board[1] = simple_board0.clone()
     // dic_board[0] = simple_board0.clone()*
     for (i=1; i<20; i++){
       dic_board[i] = dic_board[0].clone()
       dic_board[i].position.y = dic_board[0].position.y-2*i
-      group.add( dic_board[i] )
+      group_persian.add( dic_board[i] )
     }
+    return group_persian
 }
 
 function tapestry(txt, size,  x, y, z, angle){
@@ -37,7 +40,8 @@ function tapestry(txt, size,  x, y, z, angle){
       var cube = new THREE.Mesh( geom_cube, material_cube )
       cube.position.set(x, y, z)
       cube.rotation.set(0, Math.PI/180*angle, 0)
-      scene.add(cube)
+      return cube
+
 }
 
 function column_torsed(txt, size,  x, y, z, nbcubes){
@@ -352,6 +356,7 @@ var building3 = function(){
 		var sep_tab = 50;
 		list_tabl = [0, 1, 2 , 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19]
 		all_tabl = []
+    level_floor = 20
 
     for (i=0; i<40;i++){
   			wall_corr0 = wall0.clone()
@@ -360,8 +365,8 @@ var building3 = function(){
   			floor_corr1 = floor_wood0.clone()
   			wall_corr0.position.set(sz, sz/2 , -3*sz-i*sz);
   			wall_corr1.position.set(2*sz, sz , -3*sz-i*sz);
-  			floor_corr0.position.set(3*sz/2, 11 , -3*sz-i*sz);
-  			floor_corr1.position.set(5*sz/2, 11 , -3*sz-i*sz);
+  			floor_corr0.position.set(3*sz/2, level_floor , -3*sz-i*sz);
+  			floor_corr1.position.set(5*sz/2, level_floor , -3*sz-i*sz);
   			group.add( wall_corr0 );
   			group.add( wall_corr1 );
   			group.add( floor_corr0 );
@@ -397,7 +402,7 @@ var building3 = function(){
         column_dic[2].position.set(75,0,0)
         column_dic[3] = column_dic[0].clone()
         column_dic[3].position.set(130,0,0)
-        column_dic[4] = column_torsed("texture/adesivo-de-parede-azulejos-05-cozinha.jpg", 5, 10,70,-170, 13)
+        column_dic[4] = column_torsed("texture/adesivo-de-parede-azulejos-05-cozinha.jpg", 5, 10,70,-170, 12)
         column_dic[5] = column_dic[4].clone()
         column_dic[5].position.set(130,0,0)
         column_dic[6] = column_dic[4].clone()
@@ -415,15 +420,38 @@ var building3 = function(){
         column_dic[11].position.set(20,60,150)
         column_dic[12] = column_dic[4].clone()
         column_dic[12].position.set(50,60,80)
-        for (i=0; i<13; i++){
+        for (i=0; i<Object.keys(column_dic).length+1; i++){
           group.add( column_dic[i] )
         }
 
         //-------------- Persians
 
-        persians("texture/latte0.jpg", 0.5, 180,180,-10, 0)
+        dict_pers = {}
+        pers0 = persians("texture/latte0.jpg", 0.5, 0,0,0, 0)
+        dict_pers[1] = pers0.clone()
+        dict_pers[1].position.set(170,180,0)
+        dict_pers[2] = pers0.clone()
+        dict_pers[2].rotation.set(0,Math.PI/2,0)
+        dict_pers[2].position.set(200,180,-30)
+        dict_pers[3] = pers0.clone()
+        dict_pers[3].rotation.set(0,Math.PI/2,0)
+        dict_pers[3].position.set(200,130,-50)
+        for (i=1; i<Object.keys(dict_pers).length+1; i++){
+             scene.add( dict_pers[i] )
+        }
 
-        tapestry("texture/tapis.jpg", 20,  50, 75, -150, 0)
+        //-------------- Tapestry
+
+        dict_taps = {}
+        tap0 = tapestry("texture/tapis.jpg", 20,  0,0,0, 0)
+        dict_taps[1] = tap0.clone()
+        dict_taps[1].position.set(50,75,-150)
+        dict_taps[2] = tap0.clone()
+        dict_taps[2].position.set(120,140,-140)
+        for (i=1; i<Object.keys(dict_taps).length+1; i++){
+             scene.add( dict_taps[i] )
+        }
+
 
 
 } // end group building

@@ -16,7 +16,7 @@ var make_bulb = function(posx, posy, posz){
     bulbLight.add( new THREE.Mesh( bulbGeometry, bulbMat ) );
     bulbLight.castShadow = true;
     bulbLight.position.set(  posx, posy, posz  ); // 60, 50, -60
-    scene.add( bulbLight );
+    return bulbLight
 }
 
 window.onload = function(event) {
@@ -84,7 +84,7 @@ window.onload = function(event) {
       camera = new THREE.PerspectiveCamera(90, window.innerWidth/window.innerHeight, 0.01, 10000);
       //camera.position.set(-500, 400, -200);
       // camera.position.set(dist/2, dist/2, dist/2);
-      camera.position.set(200, 150, 40);
+      camera.position.set(100, 120, -200);
       scene.add(camera);
 
       controls = new THREE.OrbitControls(camera, element);
@@ -120,13 +120,26 @@ window.onload = function(event) {
        color: 0x000000
       });
 
-     make_bulb(60, 50, -60)
-     make_bulb(200, 50, -60)
-     make_bulb(130, 120, -60)
-     make_bulb(80, 120, -60)
-     make_bulb(80, 120, -120)
-     make_bulb(130, 170, -60)
-     make_bulb(130, 170, -120)
+    dict_bulb = {}
+    bulb0 = make_bulb(0,0,0)
+    dict_bulb[1] = bulb0.clone()
+    dict_bulb[1].position.set(60, 50, -60)
+    dict_bulb[2] = bulb0.clone()
+    dict_bulb[2].position.set(200, 50, -60)
+    dict_bulb[3] = bulb0.clone()
+    dict_bulb[3].position.set(130, 120, -60)
+    dict_bulb[4] = bulb0.clone()
+    dict_bulb[4].position.set(80, 120, -60)
+    dict_bulb[5] = bulb0.clone()
+    dict_bulb[5].position.set(80, 120, -120)
+    dict_bulb[6] = bulb0.clone()
+    dict_bulb[6].position.set(130, 170, -60)
+    dict_bulb[7] = bulb0.clone()
+    dict_bulb[7].position.set(130, 170, -120)
+    for (i=1; i<Object.keys(dict_bulb).length+1; i++){
+      scene.add( dict_bulb[i] )
+    }
+
 
     // Sky
 
