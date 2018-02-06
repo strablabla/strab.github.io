@@ -11,8 +11,38 @@ function import_collada(addr, scale, position, rotation){ // import collada file
     })
 }// end import_collada
 
+var make_bulb = function(posx, posy, posz){
+    /*
+    Lamps
+    */
+    var group_bulb = new THREE.Group();
+    var geom_ring = new THREE.TorusGeometry( 10, 3, 16, 100 );
+    var mat_ring = new THREE.MeshBasicMaterial( { color: 0xffff00 } );
+    var mesh_ring = new THREE.Mesh( geom_ring, mat_ring );
+    mesh_ring.position.set(  posx, posy, posz  );
+    mesh_ring.rotation.set(  Math.PI/2,0, 0  );
+    var scale_ring = 0.1
+    for (i=0;i<5;i++){
+      ring_bulb = mesh_ring.clone()
+      ring_bulb.scale.set(scale_ring, scale_ring, scale_ring)
+      ring_bulb.position.y = 5+posz+1.5*i;
+      group_bulb.add(ring_bulb)
+    }
+
+    var bulbGeometry = new THREE.SphereGeometry( size_bulb, 16, 8 );
+    bulbLight = new THREE.PointLight( 0xffee88, 1, 100, 2 );
+    bulbLight.add( new THREE.Mesh( bulbGeometry, bulbMat ) );
+    bulbLight.castShadow = true;
+    bulbLight.position.set(  posx, posy, posz  ); // 60, 50, -60
+    group_bulb.add(bulbLight)
+
+    return group_bulb
+}
+
 function persians(txt, size,  x, y, z, angle){
-    //------  board
+    /*
+    Persians
+    */
     var group_persian = new THREE.Group();
     var geom_board = new THREE.CubeGeometry( 50, 7, 3 )
     var material_board = new THREE.MeshBasicMaterial({ map: THREE.ImageUtils.loadTexture(txt) }) // "texture/latte0.jpg"
@@ -32,22 +62,25 @@ function persians(txt, size,  x, y, z, angle){
 }
 
 function tapestry(txt, size,  x, y, z, angle){
+      /*
+      Tapestry
+      */
       var geom_cube = new THREE.CubeGeometry( 2*size, 0.3, size )
       var material_cube = new THREE.MeshBasicMaterial({ map: THREE.ImageUtils.loadTexture(txt) })
       var cube = new THREE.Mesh( geom_cube, material_cube )
       cube.position.set(x, y, z)
       cube.rotation.set(0, Math.PI/180*angle, 0)
       return cube
-
 }
 
 function column_torsed(txt, size,  x, y, z, nbcubes){
+      /*
+      Torsed column
+      */
       var group_column = new THREE.Group();
       scene.add( group_column );
       var geom_cube = new THREE.CubeGeometry( size, size, size )
       var material_cube = new THREE.MeshBasicMaterial({ map: THREE.ImageUtils.loadTexture(txt) })
-      //var material_cube = new THREE.MeshBasicMaterial({ color: 0xffff00})
-      //var material_cube = new THREE.MeshBasicMaterial({ color: 0xffffff})
       cube = new THREE.Mesh( geom_cube, material_cube )
       cube.position.set(x, y, z)
 
@@ -56,37 +89,46 @@ function column_torsed(txt, size,  x, y, z, nbcubes){
         newcube.rotation.set(0, Math.PI/10*i, 0)
         newcube.position.y = y+i*size
         group_column.add(newcube)
-        //scene.add(newcube)
       }
       return group_column
 }
 
-function some_cube(txt, size,  x, z, y, roty){
-    // on créé un  plan pour lequel on définit un matériau puis on l’ajoute à la scène
-    var geom = new THREE.PlaneGeometry( size, size, size);
-    var texture = new THREE.TextureLoader().load( txt );
-    var mat= new THREE.MeshBasicMaterial( { map: texture, overdraw: true } );
-    var cube = new THREE.Mesh( geom, mat); // , new THREE.SphericalReflectionMapping()
+function tableau(txt, size,  x, z, y, roty){
+      /*
+      Tableau
+      */
+      var geom = new THREE.PlaneGeometry( size, size, 5);
+      var texture = new THREE.TextureLoader().load( txt );
+      var mat= new THREE.MeshBasicMaterial( { map: texture, overdraw: true } );
+      var tabl = new THREE.Mesh( geom, mat); // , new THREE.SphericalReflectionMapping()
 
-    cube.position.x = +x;
-    cube.position.z = +z;
-    cube.rotation.y += roty;
-    cube.position.y = y; //hauteur
-    return cube
+      tabl.position.x = +x;
+      tabl.position.z = +z;
+      tabl.rotation.y += roty;
+      tabl.position.y = y; //hauteur
+      return tabl
 }
 
-function tableau(txt, size,  x, z, y, roty){
-    // on créé un  plan pour lequel on définit un matériau puis on l’ajoute à la scène
-    var geom = new THREE.PlaneGeometry( size, size, 5);
-    var texture = new THREE.TextureLoader().load( txt );
-    var mat= new THREE.MeshBasicMaterial( { map: texture, overdraw: true } );
-    var tabl = new THREE.Mesh( geom, mat); // , new THREE.SphericalReflectionMapping()
+function pavage(txt, size,  x, z, y, roty){
+      /*
+      Pavage
+      */
+      // var geom = new THREE.PlaneGeometry( size, size, size);
+      // var texture = new THREE.TextureLoader().load( txt );
+      // var mat= new THREE.MeshBasicMaterial( { map: texture, overdraw: true } );
+      // var pav = new THREE.Mesh( geom, mat); // , new THREE.SphericalReflectionMapping()
 
-    tabl.position.x = +x;
-    tabl.position.z = +z;
-    tabl.rotation.y += roty;
-    tabl.position.y = y; //hauteur
-    return tabl
+      var texture = new THREE.TextureLoader().load( txt );
+      var geom_pav = new THREE.CubeGeometry( size, size, 3 )
+      var material_pav = new THREE.MeshBasicMaterial({ map: texture, overdraw: true })
+      pav = new THREE.Mesh( geom_pav, material_pav )
+
+      pav.rotation.x += Math.PI/2;
+      pav.position.x = x;
+      pav.position.z = z;
+      pav.rotation.y += roty;
+      pav.position.y = y; //hauteur
+      return pav
 }
 
 var bulblight = function(x,y,z){
@@ -106,51 +148,47 @@ var bulblight = function(x,y,z){
 	  return bulbLight
 }
 
-var scale = function(rot, posx, posy, posz, heighty, nbscales){
-	//Scale
-	/*
-
-	*/
-
-	hstep = 5
-	lstep = 10
-	wstep = 40
-	sx = 0
-	sz = 0
-	sy = heighty+hstep
-	group_scale = new THREE.Group();
-	scene.add( group_scale );
-	var geom_step = new THREE.CubeGeometry( wstep, hstep, lstep )
-	var material_step = new THREE.MeshBasicMaterial({ map: THREE.ImageUtils.loadTexture("textures/brick_diffuse.jpg") })
-	step0 = new THREE.Mesh( geom_step, material_step )
-
-	step0.position.set(sx,sy,sz);
-	for ( i=0;i<nbscales;i++){
-		step = step0.clone()
-		step.position.set(sx,sy+hstep*i,sz+lstep*i);
-		group_scale.add( step );
-	}
-	group_scale.rotation.y = rot; // 3*Math.PI / 2;
-	group_scale.position.set(posx, posy, posz); //420,0,0
-
+function scale(txt, rot, posx, posy, posz, heighty, nbscales){
+    	/*
+      Scale
+    	*/
+    	hstep = 5
+    	lstep = 10
+    	wstep = 40
+    	sx = 0
+    	sz = 0
+    	sy = heighty + hstep
+    	group_scale = new THREE.Group();
+    	scene.add( group_scale );
+    	var geom_step = new THREE.CubeGeometry( wstep, hstep, lstep )
+    	var material_step = new THREE.MeshBasicMaterial({ map: THREE.ImageUtils.loadTexture(txt) })
+    	step0 = new THREE.Mesh( geom_step, material_step )
+    	step0.position.set(sx,sy,sz);
+    	for ( i=0; i<nbscales; i++){
+      		step = step0.clone()
+      		step.position.set(sx, sy+hstep*i, sz+lstep*i);
+      		group_scale.add( step );
+    	}
+    	group_scale.rotation.y = rot; // 3*Math.PI / 2;
+    	group_scale.position.set(posx, posy, posz); //420,0,0
 }
 
 var building3 = function(){
 
-	//Houses
-	/*
-
-	*/
+  	/*
+    Building
+  	*/
 
 		group = new THREE.Group();
 		scene.add( group );
 
 		//------- Scale
 
-		scale(3*Math.PI / 2, 420,0,0, 0, 15)
-		scale(3*Math.PI / 2, 420,0,-120, 0, 15)
-        scale(Math.PI / 2, -150,0,0, 0, 15)
-        scale(Math.PI / 2, -150,0,-120, 0, 15)
+    var text_scale = "textures/brick_diffuse.jpg"
+		scale(text_scale, 3*Math.PI / 2, 420,0,0, 0, 15)
+		scale(text_scale, 3*Math.PI / 2, 420,0,-120, 0, 15)
+    scale(text_scale, Math.PI / 2, -150,0,0, 0, 15)
+    scale(text_scale, Math.PI / 2, -150,0,-120, 0, 15)
 
 		//------- Building
 
@@ -161,18 +199,22 @@ var building3 = function(){
 		var geom_wall = new THREE.CubeGeometry( sx, sy, sz )
 		var material_wall = new THREE.MeshBasicMaterial({ map: THREE.ImageUtils.loadTexture("textures/brick_diffuse.jpg") })
 		wall0 = new THREE.Mesh( geom_wall, material_wall )
+
 		//------ Ceiling
+
 		var geom_ceiling = new THREE.CubeGeometry( 100, 7, 100 )
 		var material_ceiling = new THREE.MeshBasicMaterial({ map: THREE.ImageUtils.loadTexture("textures/brick_diffuse.jpg") })
 		ceil0 = new THREE.Mesh( geom_ceiling, material_ceiling )
 
-		//------ Floor wood
+		//------ Floor wood, parquet
+
 		var geom_floor = new THREE.CubeGeometry( 50, 7, 50 )
 		var material_floor = new THREE.MeshBasicMaterial({ map: THREE.ImageUtils.loadTexture("textures/hardwood2_diffuse.jpg") })
 		floor_wood0 = new THREE.Mesh( geom_floor, material_floor )
 
     //------ cube
-    scube = 10
+
+    scube = 10 // size cube
     var geom_cube = new THREE.CubeGeometry( scube, scube, scube )
 		var material_cube = new THREE.MeshBasicMaterial({ map: THREE.ImageUtils.loadTexture("textures/roughness_map.jpg") })
 		cube0 = new THREE.Mesh( geom_cube, material_cube )
@@ -229,6 +271,7 @@ var building3 = function(){
 		wall16.position.set(4*sz,sy,sz/2);
 
 		//----- Ceil first stage
+
 		group.add( ceil0 );
 		group.add( ceil1 );
 		group.add( ceil2 );
@@ -352,8 +395,10 @@ var building3 = function(){
     // liste des tableaux
 		list_tabl = [0, 1, 2 , 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19]
 		all_tabl = []
-    level_floor = 20
 
+    // floor impressionists, parquet
+
+    level_floor = 20
     for (i=0; i<40;i++){
   			wall_corr0 = wall0.clone()
   			wall_corr1 = wall0.clone()
@@ -375,17 +420,21 @@ var building3 = function(){
 	        scene.add(all_tabl[i])
 	    }
 
-      // Other floors
-        level_floor_inside = 20
+      // Other floors, floor Botero, parquet
+
+        level_floor_inside = 25
         dict_floors = {}
-        for (i=0; i<4; i++){
-            for (j=0; j<3; j++){
-              dict_floors[j+3*i] = floor_wood0.clone()
-              dict_floors[j+3*i].position.set(100+50*i, level_floor_inside, -50*j)
+        scale_floor = 0.25
+        var repi = 15
+        for (i=0; i<repi; i++){
+            for (j=0; j<15; j++){
+              dict_floors[j+repi*i] = floor_wood0.clone()
+              dict_floors[j+repi*i].scale.set(scale_floor,scale_floor,scale_floor)
+              dict_floors[j+repi*i].position.set(100+50*i*scale_floor, level_floor_inside, 30-50*j*scale_floor)
             }
         }
         for (i=0; i<Object.keys(dict_floors).length+1; i++){
-          group.add( dict_floors[i] )
+               group.add( dict_floors[i] )
         }
 
         //----- Cubes
@@ -462,7 +511,8 @@ var building3 = function(){
              scene.add( dict_taps[i] )
         }
 
-        // Tableaux à l'intérieur
+        // Tableaux à l'intérieur, botero
+
         dict_tabl_inside = {}
         big_tabl_size = 35
         dict_tabl_inside[1] = tableau("paintings/Botero/Athenaeum.jpeg",big_tabl_size, 140,-115,50, 0)
@@ -483,6 +533,58 @@ var building3 = function(){
         for (i=1; i<Object.keys(dict_tabl_inside).length+1; i++){
              scene.add( dict_tabl_inside[i] )
         }
+
+        //   Bulb light
+
+        bulbMat = new THREE.MeshStandardMaterial ( {
+            emissive: 0xffffee,
+            emissiveIntensity: 1,
+            color: 0x000000
+           });
+
+        dict_bulb = {}
+        bulb0 = make_bulb(0,0,0)
+        dict_bulb[1] = bulb0.clone()
+        dict_bulb[1].position.set(60, 50, -60)
+        dict_bulb[2] = bulb0.clone()
+        dict_bulb[2].position.set(200, 50, -60)
+        dict_bulb[3] = bulb0.clone()
+        dict_bulb[3].position.set(130, 120, -60)
+        dict_bulb[4] = bulb0.clone()
+        dict_bulb[4].position.set(80, 120, -60)
+        dict_bulb[5] = bulb0.clone()
+        dict_bulb[5].position.set(80, 120, -120)
+        dict_bulb[6] = bulb0.clone()
+        dict_bulb[6].position.set(130, 170, -60)
+        dict_bulb[7] = bulb0.clone()
+        dict_bulb[7].position.set(130, 170, -120)
+        dict_bulb[8] = bulb0.clone()
+        dict_bulb[8].position.set(130, 50, -150)
+        for (i=1; i<Object.keys(dict_bulb).length+1; i++){
+              scene.add( dict_bulb[i] )
+        }
+
+        // Other floors, floor outside with checkers
+
+        size_pav = 50
+        pav_elem0 = pavage("texture/166280_2322900.jpg", size_pav,  0,0,0, 0)
+
+        level_pav0 = 25
+        dict_pav0 = {}
+        scale_pav0 = 0.5
+        var repi = 20 // z axis
+        for (i=0; i<7; i++){
+            for (j=0; j<repi; j++){
+              dict_pav0[j+repi*i] = pav_elem0.clone()
+              dict_pav0[j+repi*i].scale.set(scale_pav0, scale_pav0, scale_pav0)
+              dict_pav0[j+repi*i].position.set(110+size_pav*i*scale_pav0, level_pav0, -140-size_pav*j*scale_pav0)
+            }
+        }
+        for (i=0; i<Object.keys(dict_pav0).length+1; i++){
+               group.add( dict_pav0[i] )
+        }
+
+
 
 
 

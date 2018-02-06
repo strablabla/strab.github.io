@@ -10,15 +10,6 @@ var size_bulb = 5
 var param_bulb = 0
 var moving = false
 
-var make_bulb = function(posx, posy, posz){
-    var bulbGeometry = new THREE.SphereGeometry( size_bulb, 16, 8 );
-    bulbLight = new THREE.PointLight( 0xffee88, 1, 100, 2 );
-    bulbLight.add( new THREE.Mesh( bulbGeometry, bulbMat ) );
-    bulbLight.castShadow = true;
-    bulbLight.position.set(  posx, posy, posz  ); // 60, 50, -60
-    return bulbLight
-}
-
 window.onload = function(event) {
 
 
@@ -84,15 +75,15 @@ window.onload = function(event) {
       camera = new THREE.PerspectiveCamera(90, window.innerWidth/window.innerHeight, 0.01, 10000);
       //camera.position.set(-500, 400, -200);
       // camera.position.set(dist/2, dist/2, dist/2);
-      camera.position.set(170, 60, -70);
+      camera.position.set(170, 60, -200);
       scene.add(camera);
 
       controls = new THREE.OrbitControls(camera, element);
       // controls.rotateUp(Math.PI / 4);
       controls.target.set(
-        camera.position.x + 0.1,
-        camera.position.y,
-        camera.position.z
+          camera.position.x + 0.1,
+          camera.position.y,
+          camera.position.z
       );
       controls.noZoom = true;
       controls.noPan = true;
@@ -112,35 +103,6 @@ window.onload = function(event) {
 
    window.addEventListener('deviceorientation', setOrientationControls, true);
 
-   //   Bulb light
-
-   bulbMat = new THREE.MeshStandardMaterial ( {
-       emissive: 0xffffee,
-       emissiveIntensity: 1,
-       color: 0x000000
-      });
-
-    dict_bulb = {}
-    bulb0 = make_bulb(0,0,0)
-    dict_bulb[1] = bulb0.clone()
-    dict_bulb[1].position.set(60, 50, -60)
-    dict_bulb[2] = bulb0.clone()
-    dict_bulb[2].position.set(200, 50, -60)
-    dict_bulb[3] = bulb0.clone()
-    dict_bulb[3].position.set(130, 120, -60)
-    dict_bulb[4] = bulb0.clone()
-    dict_bulb[4].position.set(80, 120, -60)
-    dict_bulb[5] = bulb0.clone()
-    dict_bulb[5].position.set(80, 120, -120)
-    dict_bulb[6] = bulb0.clone()
-    dict_bulb[6].position.set(130, 170, -60)
-    dict_bulb[7] = bulb0.clone()
-    dict_bulb[7].position.set(130, 170, -120)
-    for (i=1; i<Object.keys(dict_bulb).length+1; i++){
-      scene.add( dict_bulb[i] )
-    }
-
-
     // Sky
 
      var size_sphere = 1000
@@ -152,10 +114,9 @@ window.onload = function(event) {
       var esp = 100
       var dist_inter_build = 1500
       building3()
-      //make_road()
 
-      //make_ground(3000)
       /* ground  */
+
       size_ground = 3000
       var geometry = new THREE.PlaneGeometry( size_ground, size_ground, 1, 1 );
       //var material = new THREE.MeshBasicMaterial( { color: 0x00ffff } );
