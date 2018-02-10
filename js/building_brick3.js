@@ -660,21 +660,21 @@ var building3 = function(){
         // Other floors, floor outside with checkers, outside Botero
 
         do_floor("texture/166280_2322900.jpg", 50, 25, 0.5, 20, 7, 110, -140) // outside Botero
-        // do_floor("texture/166280_2322900.jpg", 75, 135, 0.5, 2,1, 125, -20)  // second floor
-        // do_floor("texture/489842808.jpg", 40, 75, 0.5, 5,2, 65, -10) // first floor
-        //
-        // // Tableaux rez de chaussée
-        //
-        // dict_tabl_ff = {}
-        // big_tabl_size_ff = 8
-        // level0_ff = 55
-        // dict_tabl_ff[1] = tableau("images/roi_de_takicardie.jpg",big_tabl_size_ff, 10,0,level0_ff,Math.PI/2)// Math.PI/2
-        // dict_tabl_ff[2] = tableau("images/daumier_Louis_Phillipe.jpg",big_tabl_size_ff, 10,-15,level0_ff,Math.PI/2)// Math.PI/2
-        // dict_tabl_ff[3] = tableau("images/daumier_Louis-Phillie_gargantua.jpg",big_tabl_size_ff, 10,-30,level0_ff,Math.PI/2)// Math.PI/2
-        //
-        // for (i=1; i<Object.keys(dict_tabl_ff).length+1; i++){
-        //      scene.add( dict_tabl_ff[i] )
-        // }
+        do_floor("texture/166280_2322900.jpg", 75, 135, 0.5, 2,1, 125, -20)  // second floor
+        do_floor("texture/489842808.jpg", 40, 75, 0.5, 5,2, 65, -10) // first floor
+
+        // Tableaux rez de chaussée
+
+        dict_tabl_ff = {}
+        big_tabl_size_ff = 8
+        level0_ff = 55
+        dict_tabl_ff[1] = tableau("images/roi_de_takicardie.jpg",big_tabl_size_ff, 10,0,  level0_ff, Math.PI/2)                  // Roi et l'oiseau..
+        dict_tabl_ff[2] = tableau("images/daumier_Louis_Phillipe.jpg",big_tabl_size_ff, 10,-15, level0_ff, Math.PI/2)           // Louis Phillipe
+        dict_tabl_ff[3] = tableau("images/daumier_Louis-Phillie_gargantua.jpg",big_tabl_size_ff, 10,-30, level0_ff, Math.PI/2)  // Louis Phillipe Gargantua
+
+        for (i=1; i<Object.keys(dict_tabl_ff).length+1; i++){
+             scene.add( dict_tabl_ff[i] )
+        }
 
 
 
