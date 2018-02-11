@@ -141,7 +141,7 @@ function column_torsed(txt, size,  x, y, z, nbcubes){
       Torsed column
       */
       var group_column = new THREE.Group();
-      scene.add( group_column );
+      //scene.add( group_column );
       var geom_cube = new THREE.CubeGeometry( size, size, size )
       var material_cube = new THREE.MeshBasicMaterial({ map: THREE.ImageUtils.loadTexture(txt) })
       cube = new THREE.Mesh( geom_cube, material_cube )
@@ -690,6 +690,21 @@ var building3 = function(){
 
         for (i=1; i<Object.keys(dict_tabl_ff).length+1; i++){
              scene.add( dict_tabl_ff[i] )
+        }
+        //----- The four columns, pillars
+
+        column_tower_dic = {}
+        column_tower_dic[0] = column_torsed("texture/azulejos_portugal.jpg", 15, 0,0,0, 10) // door
+        column_tower_dic[1] = column_tower_dic[0].clone()
+        column_tower_dic[1].position.set(45,10,100)
+        column_tower_dic[2] = column_tower_dic[0].clone()
+        column_tower_dic[2].position.set(80,10,100)
+        column_tower_dic[3] = column_tower_dic[0].clone()
+        column_tower_dic[3].position.set(80,10,150)
+        column_tower_dic[4] = column_tower_dic[0].clone()
+        column_tower_dic[4].position.set(45,10,150)
+        for (i=1; i<Object.keys(column_tower_dic).length+1; i++){
+          group.add( column_tower_dic[i] )
         }
 
 
