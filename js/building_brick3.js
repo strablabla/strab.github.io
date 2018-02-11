@@ -693,17 +693,19 @@ var building3 = function(){
         }
         //----- The four columns, pillars
 
-        column_tower_dic = {}
-        column_tower_dic[0] = column_torsed("texture/azulejos_portugal.jpg", 15, 0,0,0, 10) // door
-        column_tower_dic[1] = column_tower_dic[0].clone()
-        column_tower_dic[1].position.set(45,10,100)
-        column_tower_dic[2] = column_tower_dic[0].clone()
-        column_tower_dic[2].position.set(80,10,100)
-        column_tower_dic[3] = column_tower_dic[0].clone()
-        column_tower_dic[3].position.set(80,10,150)
-        column_tower_dic[4] = column_tower_dic[0].clone()
-        column_tower_dic[4].position.set(45,10,150)
-        for (i=1; i<Object.keys(column_tower_dic).length+1; i++){
+        var column_tower_dic = {}
+
+        var space_col = 20
+        height_tow = 50
+        var column_tower_base = column_torsed("texture/azulejos_portugal.jpg", 15, 0,0,0, height_tow) // door
+        for (i=0;i<10; i++){
+          column_tower_dic[2*i] = column_tower_base.clone()
+          column_tower_dic[2*i].position.set(45,10,80+space_col*i)
+          column_tower_dic[2*i+1] = column_tower_base.clone()
+          column_tower_dic[2*i+1].position.set(80,10,80+space_col*i)
+        }
+
+        for (i=0; i<Object.keys(column_tower_dic).length+1; i++){
           group.add( column_tower_dic[i] )
         }
 
