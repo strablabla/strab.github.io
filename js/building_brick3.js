@@ -55,6 +55,9 @@ var make_bulb = function(posx, posy, posz){
     /*
     Lamps
     */
+
+    // rings
+
     var group_bulb = new THREE.Group();
     var geom_ring = new THREE.TorusGeometry( 10, 3, 16, 100 );
     var mat_ring = new THREE.MeshBasicMaterial( { color: 0xffff00 } );
@@ -68,6 +71,15 @@ var make_bulb = function(posx, posy, posz){
       ring_bulb.position.y = 5+posz+1.5*i;
       group_bulb.add(ring_bulb)
     }
+
+    // cone
+    var scale_cone = 1.2
+    var geom_cone_bulb = new THREE.ConeGeometry( 10, 7, 32 );
+    var mat_cone_bulb = new THREE.MeshBasicMaterial( {color: 0xffff00} );
+    var cone_bulb = new THREE.Mesh( geom_cone_bulb, mat_cone_bulb );
+    cone_bulb.position.set(  posx, posy+2, posz  );
+    cone_bulb.scale.set(  scale_cone, scale_cone, scale_cone  );
+    group_bulb.add(cone_bulb)
 
     var bulbGeometry = new THREE.SphereGeometry( size_bulb, 16, 8 );
     bulbLight = new THREE.PointLight( 0xffee88, 1, 100, 2 );
@@ -709,8 +721,7 @@ var building3 = function(){
         dict_tabl_ff[1] = tableau("images/Shadok/connerie_intelligence.jpg",40, 7,-30, level1_ff, Math.PI/2)
         dict_tabl_ff[2] = tableau("images/Shadok/solutions.jpg",40, 90,-30, level1_ff, 3*Math.PI/2)
         dict_tabl_ff[3] = tableau("images/Shadok/bien_mal.jpg",30, 30,-65, level1_ff, 0)
-        dict_tabl_ff[4] = tableau("images/Shadok/précaution.jpg",35, 25,10, 50, Math.PI)
-
+        dict_tabl_ff[4] = tableau("images/Shadok/précaution.jpg",30, 30,18,47, Math.PI)
 
         for (i=1; i<Object.keys(dict_tabl_ff).length+1; i++){
              scene.add( dict_tabl_ff[i] )
