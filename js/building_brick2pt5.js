@@ -660,8 +660,8 @@ var building3 = function(){
         // Other floors, floor outside with checkers, outside Botero
 
         do_floor("texture/166280_2322900.jpg", 50, 25, 0.5, 20, 7, 110, -140)
-        do_floor("texture/166280_2322900.jpg", 75, 135, 0.5, 2,1, 125, -20)  // second floor
-        do_floor("texture/489842808.jpg", 40, 75, 0.5, 5,2, 65, -10) // first floor
+        // do_floor("texture/166280_2322900.jpg", 75, 135, 0.5, 2,1, 125, -20)  // second floor
+        // do_floor("texture/489842808.jpg", 40, 75, 0.5, 5,2, 65, -10) // first floor
 
 
 } // end group building
