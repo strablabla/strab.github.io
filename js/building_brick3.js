@@ -27,7 +27,6 @@ function do_floor(txt, size_pav, level_pav, scale_pav, sizez, sizex, posx, posz)
     }
 
 
-
 var make_bulb = function(posx, posy, posz){
     /*
     Lamps
@@ -669,17 +668,24 @@ var building3 = function(){
         big_tabl_size_ff = 8
         level0_ff = 55
         level1_ff = 45
-        dict_tabl_ff[1] = tableau("images/Shadok/bien_mal.jpg",big_tabl_size_ff, 10,0,  level0_ff, Math.PI/2)                  //
-        dict_tabl_ff[2] = tableau("images/Shadok/cerveau_fatigue.jpg",big_tabl_size_ff, 10,-15, level0_ff, Math.PI/2)           //
-        dict_tabl_ff[3] = tableau("images/Shadok/faut_y_aller.jpg",big_tabl_size_ff, 10,-30, level0_ff, Math.PI/2)  //
-        dict_tabl_ff[4] = tableau("images/Shadok/solutions.jpg",big_tabl_size_ff, 10,-45, level0_ff, Math.PI/2)  //
-        dict_tabl_ff[5] = tableau("images/Shadok/passoire.jpg",big_tabl_size_ff, 10,-60, level0_ff, Math.PI/2)  //
-        //-----------
-        dict_tabl_ff[6] = tableau("images/Shadok/connerie_intelligence.jpg",big_tabl_size_ff, 10,0,  level1_ff, Math.PI/2)    //
-        dict_tabl_ff[7] = tableau("images/Shadok/trop_intelligent.jpg",big_tabl_size_ff, 10,-15, level1_ff, Math.PI/2)           //
-        dict_tabl_ff[8] = tableau("images/Shadok/intérieur.jpg",big_tabl_size_ff, 10,-30, level1_ff, Math.PI/2)  //
-        dict_tabl_ff[9] = tableau("images/Shadok/précaution.jpg",big_tabl_size_ff, 10,-45, level1_ff, Math.PI/2)  //
-        dict_tabl_ff[10] = tableau("images/Shadok/réessayer.jpg",big_tabl_size_ff, 10,-60, level1_ff, Math.PI/2)  //
+        // dict_tabl_ff[1] = tableau("images/Shadok/bien_mal.jpg",big_tabl_size_ff, 10,0,  level0_ff, Math.PI/2)                  //
+        // dict_tabl_ff[2] = tableau("images/Shadok/cerveau_fatigue.jpg",big_tabl_size_ff, 10,-15, level0_ff, Math.PI/2)           //
+        // dict_tabl_ff[3] = tableau("images/Shadok/faut_y_aller.jpg",big_tabl_size_ff, 10,-30, level0_ff, Math.PI/2)  //
+        // dict_tabl_ff[4] = tableau("images/Shadok/solutions.jpg",big_tabl_size_ff, 10,-45, level0_ff, Math.PI/2)  //
+        // dict_tabl_ff[5] = tableau("images/Shadok/passoire.jpg",big_tabl_size_ff, 10,-60, level0_ff, Math.PI/2)  //
+        // //-----------
+        //dict_tabl_ff[6] = tableau("images/Shadok/connerie_intelligence.jpg",big_tabl_size_ff, 10,0,  level1_ff, Math.PI/2)    //
+
+        //dict_tabl_ff[7] = tableau("images/Shadok/trop_intelligent.jpg",big_tabl_size_ff, 10,-15, level1_ff, Math.PI/2)
+        //dict_tabl_ff[7] = tableau("images/Shadok/trop_intelligent.jpg",50, 10,-15, 50, Math.PI/2)           //
+        // dict_tabl_ff[8] = tableau("images/Shadok/intérieur.jpg",big_tabl_size_ff, 10,-30, level1_ff, Math.PI/2)  //
+        // dict_tabl_ff[9] = tableau("images/Shadok/précaution.jpg",big_tabl_size_ff, 10,-45, level1_ff, Math.PI/2)  //
+        // dict_tabl_ff[10] = tableau("images/Shadok/réessayer.jpg",big_tabl_size_ff, 10,-60, level1_ff, Math.PI/2)  //
+        //----------
+        dict_tabl_ff[1] = tableau("images/Shadok/connerie_intelligence.jpg",40, 7,-30, level1_ff, Math.PI/2)
+        dict_tabl_ff[2] = tableau("images/Shadok/solutions.jpg",40, 90,-30, level1_ff, 3*Math.PI/2)
+        dict_tabl_ff[3] = tableau("images/Shadok/bien_mal.jpg",30, 30,-65, level1_ff, 0)
+        dict_tabl_ff[4] = tableau("images/Shadok/précaution.jpg",35, 25,10, 50, Math.PI)
 
 
         for (i=1; i<Object.keys(dict_tabl_ff).length+1; i++){
