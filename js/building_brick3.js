@@ -102,6 +102,7 @@ function meander(txt, sizex, sizey, posx, posy, posz, nbmeand, length,  nbseg, a
         var geometry = new THREE.TubeGeometry( path, nbseg, sizex, sizey, false );
         //var material = new THREE.MeshBasicMaterial( { color: 0x000000 } );
         var material = new THREE.MeshBasicMaterial( { map: texture} );
+        //var material = new THREE.MeshBasicMaterial( { color: 0xcceeff } ); // 4dc3ff
         var mesh = new THREE.Mesh( geometry, material );
         //mesh.rotation.set(ang)
         mesh.position.set(posx, posy, posz)
@@ -905,7 +906,7 @@ var building3 = function(){
 
         // Meander
 
-        meander("texture/water_water.jpg", 5,700, -1000,22,50, 80, 500, 1000, 0)
+        meander("texture/water_water.jpg", 5,700, -1000,22,50, 80, 500, 400, 0)
 
 
 
