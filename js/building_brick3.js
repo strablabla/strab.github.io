@@ -906,7 +906,7 @@ var building3 = function(){
 
         // Meander
 
-        meander("texture/water_water.jpg", 5,700, -1000,22,50, 80, 500, 400, 0)
+        //meander("texture/water_water.jpg", 5,700, -1000,22,50, 80, 500, 400, 0)
 
 
 
