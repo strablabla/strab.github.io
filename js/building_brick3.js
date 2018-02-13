@@ -10,6 +10,142 @@ function import_collada(addr, scale, position, rotation){ // import collada file
       scene.add(collada.scene)
     })
 }// end import_collada
+//
+
+
+
+// function road_white(sizex, sizey, posx, posy, posz){
+//   /*
+//   road
+//   */
+//   // Create a sine-like wave
+// var curve = new THREE.SplineCurve( [
+// 	new THREE.Vector2( -10, 0 ),
+// 	new THREE.Vector2( -5, 5 ),
+// 	new THREE.Vector2( 0, 0 ),
+// 	new THREE.Vector2( 5, -5 ),
+// 	new THREE.Vector2( 10, 0 )
+// ] );
+//
+// var points = curve.getPoints( 500 );
+// var geometry = new THREE.BufferGeometry().setFromPoints( points );
+//
+// var material = new THREE.LineBasicMaterial( { color : 0xff0000 } );
+//
+// // Create the final object to add to the scene
+// var splineObject = new THREE.Line( geometry, material );
+// splineObject.scale.set(400)
+// splineObject.position.set(100,200,200)
+//
+// scene.add( splineObject );
+//
+// }
+
+function tube_text(txt, sizex, sizey, posx, posy, posz){
+  /*
+  road
+  */
+
+          function CustomSinCurve( scale ) {
+
+        	THREE.Curve.call( this );
+
+        	this.scale = ( scale === undefined ) ? 1 : scale;
+
+        }
+
+        CustomSinCurve.prototype = Object.create( THREE.Curve.prototype );
+        CustomSinCurve.prototype.constructor = CustomSinCurve;
+
+        CustomSinCurve.prototype.getPoint = function ( t ) {
+
+        	var tx = t * 3 - 1.5;
+        	var ty = Math.sin( 2 * Math.PI * t );
+        	var tz = 0;
+
+        	return new THREE.Vector3( tx, ty, tz ).multiplyScalar( this.scale );
+
+        };
+
+        var path = new CustomSinCurve( 20 );
+        var geometry = new THREE.TubeGeometry( path, 200, 2, 8, false );
+        //var material = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
+        var material = new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture("texture/im-4-stickers-deco-Mosaiques-12x12cm-style-Azulejos-yellow.jpg")} );
+
+        var mesh = new THREE.Mesh( geometry, material );
+        mesh.position.set(0,100,100)
+        scene.add( mesh );
+
+}
+
+function meander(txt, sizex, sizey, posx, posy, posz, nbmeand, length,  nbseg, ang){
+    /*
+    meander
+    */
+
+      function CustomSinCurve( scale ) {
+        	THREE.Curve.call( this );
+        	this.scale = ( scale === undefined ) ? 1 : scale;
+        }
+
+          CustomSinCurve.prototype = Object.create( THREE.Curve.prototype );
+          CustomSinCurve.prototype.constructor = CustomSinCurve;
+          CustomSinCurve.prototype.getPoint = function ( t ) {
+        	var tx = t * length;
+        	var ty = 0;
+        	var tz = Math.sin( nbmeand * Math.PI * t );
+        	return new THREE.Vector3( tx, ty, tz ).multiplyScalar( this.scale );
+
+        };
+        var texture = new THREE.TextureLoader().load( txt );
+        var path = new CustomSinCurve( 20 );
+        var geometry = new THREE.TubeGeometry( path, nbseg, sizex, sizey, false );
+        //var material = new THREE.MeshBasicMaterial( { color: 0x000000 } );
+        var material = new THREE.MeshBasicMaterial( { map: texture} );
+        var mesh = new THREE.Mesh( geometry, material );
+        //mesh.rotation.set(ang)
+        mesh.position.set(posx, posy, posz)
+        mesh.scale.set(1,0.1,1)
+        scene.add( mesh );
+
+}
+
+
+function road_white(sizex, sizey, posx, posy, posz){
+  /*
+  road
+  */
+
+      function CustomSinCurve( scale ) {
+        	THREE.Curve.call( this );
+        	this.scale = ( scale === undefined ) ? 1 : scale;
+        }
+
+        CustomSinCurve.prototype = Object.create( THREE.Curve.prototype );
+        CustomSinCurve.prototype.constructor = CustomSinCurve;
+        CustomSinCurve.prototype.getPoint = function ( t ) {
+
+        	var tx = t * 10 - 1.5;
+        	var ty = 0;
+        	var tz = Math.sin( 10 * Math.PI * t );
+
+        	return new THREE.Vector3( tx, ty, tz ).multiplyScalar( this.scale );
+
+        };
+
+        var path = new CustomSinCurve( 20 );
+        var geometry = new THREE.TubeGeometry( path, 200, 2, 20, false );
+        var material = new THREE.MeshBasicMaterial( { color: 0x000000 } );
+        //var material = new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture("texture/im-4-stickers-deco-Mosaiques-12x12cm-style-Azulejos-yellow.jpg")} );
+
+        var mesh = new THREE.Mesh( geometry, material );
+        mesh.position.set(0,100,10)
+        mesh.scale.set(1,0.1,1)
+
+        scene.add( mesh );
+
+}
+
 
 function ceiling_white(sizex, sizey, posx, posy, posz){
   /*
@@ -29,10 +165,11 @@ function ball(txt, size, posx, posy, posz){
       ball
       */
       var geometry = new THREE.SphereGeometry( size, 32, 32 );
-      var material = new THREE.MeshBasicMaterial( {map: THREE.ImageUtils.loadTexture(txt)} );
-      var ball = new THREE.Mesh( geometry, material );
-      ball.position.set(posx, posy, posz)
-      return ball
+      var texture = new THREE.TextureLoader().load( txt );
+      var material = new THREE.MeshBasicMaterial( {map: texture} );
+      var balloon = new THREE.Mesh( geometry, material );
+      balloon.position.set(posx, posy, posz)
+      return balloon
 }
 
 function do_floor(txt, size_pav, level_pav, scale_pav, sizez, sizex, posx, posz){
@@ -106,7 +243,8 @@ function treillis(txt, size,  x, y, z, angle){
     */
     var group_treillis = new THREE.Group();
     var geom_treillis = new THREE.CubeGeometry( 50, 7, 3 )
-    var material_treillis = new THREE.MeshBasicMaterial({ map: THREE.ImageUtils.loadTexture(txt),
+    var texture = new THREE.TextureLoader().load( txt );
+    var material_treillis = new THREE.MeshBasicMaterial({ map:texture,
                         clippingPlanes: [ localPlane ]
                        }) // "texture/latte0.jpg"
     simple_board0 = new THREE.Mesh( geom_treillis, material_treillis )
@@ -144,7 +282,8 @@ function persians(txt, size,  x, y, z, angle){
     */
     var group_persian = new THREE.Group();
     var geom_board = new THREE.CubeGeometry( 50, 7, 3 )
-    var material_board = new THREE.MeshBasicMaterial({ map: THREE.ImageUtils.loadTexture(txt) }) // "texture/latte0.jpg"
+    var texture = new THREE.TextureLoader().load( txt );
+    var material_board = new THREE.MeshBasicMaterial({ map: texture }) // "texture/latte0.jpg"
     simple_board0 = new THREE.Mesh( geom_board, material_board )
     dic_board = {}
     scale_board = size
@@ -179,7 +318,8 @@ function column_torsed(txt, size,  x, y, z, nbcubes){
       var group_column = new THREE.Group();
       //scene.add( group_column );
       var geom_cube = new THREE.CubeGeometry( size, size, size )
-      var material_cube = new THREE.MeshBasicMaterial({ map: THREE.ImageUtils.loadTexture(txt) })
+      var texture = new THREE.TextureLoader().load( txt );
+      var material_cube = new THREE.MeshBasicMaterial({ map: texture})
       cube = new THREE.Mesh( geom_cube, material_cube )
       cube.position.set(x, y, z)
 
@@ -751,13 +891,21 @@ var building3 = function(){
         ball_dic[0] = ball("texture/verre-souffle-bariole-bar014.jpg", size_ball, 50,30, posz_ball-5)
         ball_dic[1] = ball("texture/bariolé_clair.jpeg", size_ball, 40,30, posz_ball+5)
         ball_dic[2] = ball("texture/verre-souffle-bariole-bar233.jpg", size_ball, 30,30, posz_ball-3)
-        for (i=0; i<Object.keys(ball_dic).length+1; i++){
-          group.add( ball_dic[i] )
+        for (i=0; i < Object.keys(ball_dic).length+1; i++){
+              group.add( ball_dic[i] )
         }
 
         //---------------
         ceil = ceiling_white(90,90, 50,66.5,-20)
         group.add( ceil )
+
+        //------------- Road
+
+        //road_white(10, 5, 0, 40, 100)
+
+        // Meander
+
+        meander("texture/water_water.jpg", 5,700, -1000,22,50, 80, 500, 1000, 0)
 
 
 
