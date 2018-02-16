@@ -177,18 +177,18 @@ window.onload = function(event) {
 
       // Moving cages up and down
 
-      // for (i=1; i < Object.keys(dic_cage).length+1; i++){
-      //         if (dic_cage[i].position.y < 400){
-      //             dic_cage_speed[i] *= 1;
-      //         }
-      //         else{
-      //             dic_cage_speed[i] *= -1;
-      //         }
-      //         if (dic_cage[i].position.y < 30){
-      //           dic_cage_speed[i] *= -1;
-      //         }
-      //         dic_cage[i].position.y += dic_cage_speed[i]*0.1
-      //       }
+      for (i=1; i < Object.keys(dic_cage).length+1; i++){
+              if (dic_cage[i].position.y < 400){
+                  dic_cage_speed[i] *= 1;
+              }
+              else{
+                  dic_cage_speed[i] *= -1;
+              }
+              if (dic_cage[i].position.y < 30){
+                dic_cage_speed[i] *= -1;
+              }
+              dic_cage[i].position.y += dic_cage_speed[i]*0.1
+            }
 
 
       bulbMat.emissiveIntensity = bulbLight.intensity / Math.pow( 0.02, 2.0 ); // convert from intensity to irradiance at bulb surface

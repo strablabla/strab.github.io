@@ -901,9 +901,12 @@ var building3 = function(){
          // azulejos-oscuro.jpg // 166280_2322900.jpg / im-4-stickers-deco-Mosaiques-12x12cm-style-AzulejosCarreaux-de-ciment-Vert.jpg
          // do_floor("texture/Mosaique-pate-de-verre-CY29-VERT-TURQUOISE-zoom.jpg", 75, 135, 0.5, 2,1, 175, -20) //
          // do_floor("texture/Mosaique-pate-de-verre-CY08-ROSE-PARME-zoom.jpg", 75, 75, 0.5, 2,1, 175, -20) //
-         do_floor("texture/azulejos-oscuro.jpg", 75, 135, 0.5, 1,1, 175, -22) // second floor
-         do_floor("texture/azulejos-oscuro.jpg", 75, 75, 0.5, 2,3, 100, -40) // first floor white
-         do_floor("texture/166280_2322900.jpg", 78, 135, 0.5, 1,4, 60, -75) // second floor
+
+
+         // do_floor("texture/azulejos-oscuro.jpg", 75, 135, 0.5, 1,1, 175, -22) // second floor
+         // do_floor("texture/azulejos-oscuro.jpg", 75, 75, 0.5, 2,3, 100, -40) // first floor white
+         // do_floor("texture/166280_2322900.jpg", 78, 135, 0.5, 1,4, 60, -75) // second floor
+         
          // mosaique-emaux-blanc-pur-103-pas-zoom.jpg
 
         // Tableaux rez de chaussée Shadoks
