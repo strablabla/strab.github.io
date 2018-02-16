@@ -691,7 +691,8 @@ var building3 = function(){
 		size_tab = 20;
 		var sep_tab = 50;
     // liste des tableaux
-		list_tabl = [0, 1, 2 , 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19]
+		//list_tabl = [0, 1, 2 , 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19]
+    list_tabl = [ 5, 6, 8, 11, 12, 13, 14, 15, 19]
 		all_tabl = []
 
     // floor impressionists, parquet
@@ -900,7 +901,7 @@ var building3 = function(){
          // do_floor("texture/Mosaique-pate-de-verre-CY29-VERT-TURQUOISE-zoom.jpg", 75, 135, 0.5, 2,1, 175, -20) //
          // do_floor("texture/Mosaique-pate-de-verre-CY08-ROSE-PARME-zoom.jpg", 75, 75, 0.5, 2,1, 175, -20) //
          do_floor("texture/azulejos-oscuro.jpg", 75, 135, 0.5, 1,1, 175, -22) // second floor
-         do_floor("texture/azulejos-oscuro.jpg", 75, 75, 0.5, 2,3, 100, -40) // first floor white
+         do_floor("texture/azulejos-oscuro.jpg", 75, 75, 0.5, 2,3, 120, -40) // first floor
          do_floor("texture/166280_2322900.jpg", 78, 135, 0.5, 1,4, 60, -75) // second floor
          // mosaique-emaux-blanc-pur-103-pas-zoom.jpg
 
