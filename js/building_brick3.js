@@ -1,3 +1,4 @@
+
 function import_collada(addr, scale, position, rotation){ // import collada files
     loader = new THREE.ColladaLoader();
     loader.load(addr, function(collada) {
@@ -9,218 +10,17 @@ function import_collada(addr, scale, position, rotation){ // import collada file
       scene.add(collada.scene)
     })
 }// end import_collada
-//
-
-function meander(txt, sizex, sizey, posx, posy, posz, nbmeand, length,  nbseg, ang){
-    /*
-    meander
-    */
-
-      function CustomSinCurve( scale ) {
-        	THREE.Curve.call( this );
-        	this.scale = ( scale === undefined ) ? 1 : scale;
-        }
-
-          CustomSinCurve.prototype = Object.create( THREE.Curve.prototype );
-          CustomSinCurve.prototype.constructor = CustomSinCurve;
-          CustomSinCurve.prototype.getPoint = function ( t ) {
-        	var tx = t * length;
-        	var ty = 0;
-        	var tz = Math.sin( nbmeand * Math.PI * t );
-        	return new THREE.Vector3( tx, ty, tz ).multiplyScalar( this.scale );
-
-        };
-        var texture = new THREE.TextureLoader().load( txt );
-        var path = new CustomSinCurve( 20 );
-        var geometry = new THREE.TubeGeometry( path, nbseg, sizex, sizey, false );
-        //var material = new THREE.MeshBasicMaterial( { color: 0x000000 } );
-        var material = new THREE.MeshBasicMaterial( { map: texture} );
-        //var material = new THREE.MeshBasicMaterial( { color: 0xcceeff } ); // 4dc3ff
-        var mesh = new THREE.Mesh( geometry, material );
-        //mesh.rotation.set(ang)
-        mesh.position.set(posx, posy, posz)
-        mesh.scale.set(1,0.1,1)
-        scene.add( mesh );
-
-}
-
-function simple_grid(posx, posy, posz, txt){
-      /*
-      Simple Grid
-      */
-
-      dic_simple_grid = {map:new THREE.TextureLoader().load( txt )} || {color: 0x000000}
-      // "textures/hardwood2_diffuse.jpg"
-
-      var group_simple_grid = new THREE.Group();
-
-      var geometry = new THREE.CylinderGeometry( 0.2,0.2, 20, 32 );
-      var material = new THREE.MeshBasicMaterial( dic_simple_grid );
-      var cylinder0 = new THREE.Mesh( geometry, material );
-      //var material = new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture("texture/im-4-stickers-deco-Mosaiques-12x12cm-style-Azulejos-yellow.jpg")} );
-
-      size_grid = 0.3
-      space_grid = 3
-      nbbar = 7
-
-      for (i=0;i<nbbar;i++){          // vertic
-         newgrid = cylinder0.clone()
-         newgrid.position.y = 10
-         newgrid.position.x = i*space_grid
-         //newgrid.scale.x = 0.5
-         group_simple_grid.add( newgrid );
-
-      }
-      for (i=0;i<nbbar;i++){               // horiz
-         newgrid = cylinder0.clone()
-         newgrid.rotation.set(0,0,Math.PI/2)
-         newgrid.position.y = 1+i*space_grid
-         newgrid.position.x = 9
-         group_simple_grid.add( newgrid );
-
-      }
-        group_simple_grid.position.set(posx, posy, posz)
-        group_simple_grid.scale.set(0.3,1,1)
-
-        return group_simple_grid
-
-}
-
-function cage(posx, posy, posz){
-    /*
-    Cage
-    */
-    var geom_cube = new THREE.CubeGeometry( 5, 0.3, 5 )
-    var texture = new THREE.TextureLoader().load( "textures/hardwood2_diffuse.jpg" );
-    var material_cube = new THREE.MeshBasicMaterial({ map: texture })
-    var ground_cage0 = new THREE.Mesh( geom_cube, material_cube )
-    ground_cage0.position.set(2.5,0,2.5)
-    var ground_cage1 = ground_cage0.clone()
-    ground_cage1.position.y = 20
-    //----------
-    var group_cage = new THREE.Group();
-    sgrid0 = simple_grid(0,0,0) //-100,30,70
-    sgrid1 = sgrid0.clone()
-    sgrid2 = sgrid0.clone()
-    sgrid2.rotation.set(0,Math.PI/2,0)
-    sgrid2.position.z = 5
-    sgrid3 = sgrid2.clone()
-    sgrid3.position.x = 5
-    //sgrid3.position.set(-100,30,110)
-    sgrid4 = sgrid1.clone()
-    sgrid4.position.set(0,0,5)
-    group_cage.add(sgrid1)
-    group_cage.add(sgrid2)
-    group_cage.add(sgrid3)
-    group_cage.add(sgrid4)
-    group_cage.add(ground_cage0)
-    group_cage.add(ground_cage1)
-    group_cage.position.set(posx, posy, posz)
-    group_cage.scale.set(1.5,1,1.5)
-    return group_cage
-
-    }
-
-function wavy_grid(sizex, sizey, posx, posy, posz){
-      /*
-      Wavy Grid
-      */
-
-      var group_grid = new THREE.Group();
-
-      function CustomSinCurve( scale ) {
-          THREE.Curve.call( this );
-          this.scale = ( scale === undefined ) ? 1 : scale;
-        }
-
-          CustomSinCurve.prototype = Object.create( THREE.Curve.prototype );
-          CustomSinCurve.prototype.constructor = CustomSinCurve;
-          CustomSinCurve.prototype.getPoint = function ( t ) {
-
-          var tx = t * 5 - 1.5;
-          var ty = 0.1*Math.sin( 10 * Math.PI * t );
-          var tz = 0;
-
-          return new THREE.Vector3( tx, ty, tz ).multiplyScalar( this.scale );
-
-        };
-
-        var path = new CustomSinCurve( 20 );
-        var geometry = new THREE.TubeGeometry( path, 200, 2, 20, false );
-        var material = new THREE.MeshBasicMaterial( { color: 0x000000 } );
-        //var material = new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture("texture/im-4-stickers-deco-Mosaiques-12x12cm-style-Azulejos-yellow.jpg")} );
-        var grid0 = new THREE.Mesh( geometry, material );
-        size_grid = 0.3
-        grid0.scale.set(size_grid,size_grid,size_grid)
-        space_grid = 3
-
-        for (i=0;i<10;i++){          // horiz
-           newgrid = grid0.clone()
-           newgrid.position.y = 50+i*space_grid
-           newgrid.scale.x = 0.5
-           group_grid.add( newgrid );
-
-        }
-        for (i=0;i<15;i++){               // vertic
-           newgrid = grid0.clone()
-           newgrid.rotation.set(0,0,Math.PI/2)
-           newgrid.position.x = i*space_grid-10
-           newgrid.position.y = 57
-           group_grid.add( newgrid );
-
-        }
-
-        group_grid.position.set(posx, posy, posz)
-        group_grid.scale.set(0.3,0.3,0.3)
-
-        return group_grid
-
-}
-
-function road_white(sizex, sizey, posx, posy, posz){
-      /*
-      road
-      */
-
-      function CustomSinCurve( scale ) {
-        	THREE.Curve.call( this );
-        	this.scale = ( scale === undefined ) ? 1 : scale;
-        }
-
-          CustomSinCurve.prototype = Object.create( THREE.Curve.prototype );
-          CustomSinCurve.prototype.constructor = CustomSinCurve;
-          CustomSinCurve.prototype.getPoint = function ( t ) {
-
-        	var tx = t * 10 - 1.5;
-        	var ty = 0;
-        	var tz = Math.sin( 10 * Math.PI * t );
-
-        	return new THREE.Vector3( tx, ty, tz ).multiplyScalar( this.scale );
-
-        };
-
-        var path = new CustomSinCurve( 20 );
-        var geometry = new THREE.TubeGeometry( path, 200, 2, 20, false );
-        var material = new THREE.MeshBasicMaterial( { color: 0x000000 } );
-        //var material = new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture("texture/im-4-stickers-deco-Mosaiques-12x12cm-style-Azulejos-yellow.jpg")} );
-        var mesh = new THREE.Mesh( geometry, material );
-        mesh.position.set(0,100,10)
-        mesh.scale.set(1,0.1,1)
-
-        scene.add( mesh );
-
-}
 
 function ceiling_white(sizex, sizey, posx, posy, posz){
-      /*
-      ceiling
-      */
+  /*
+  ceiling
+  */
 
-      var geom_ceiling = new THREE.CubeGeometry( sizex, 1, sizey )
-      var mat_ceiling = new THREE.MeshBasicMaterial({ color: 0xffffff }) // "texture/latte0.jpg"
-      var ceiling = new THREE.Mesh( geom_ceiling, mat_ceiling );
-      ceiling.position.set(posx, posy, posz)
-      return ceiling
+  var geom_ceiling = new THREE.CubeGeometry( sizex, 1, sizey )
+  var mat_ceiling = new THREE.MeshBasicMaterial({ color: 0xffffff }) // "texture/latte0.jpg"
+  var ceiling = new THREE.Mesh( geom_ceiling, mat_ceiling );
+  ceiling.position.set(posx, posy, posz)
+  return ceiling
 
 }
 
@@ -229,11 +29,10 @@ function ball(txt, size, posx, posy, posz){
       ball
       */
       var geometry = new THREE.SphereGeometry( size, 32, 32 );
-      var texture = new THREE.TextureLoader().load( txt );
-      var material = new THREE.MeshBasicMaterial( {map: texture} );
-      var balloon = new THREE.Mesh( geometry, material );
-      balloon.position.set(posx, posy, posz)
-      return balloon
+      var material = new THREE.MeshBasicMaterial( {map: THREE.ImageUtils.loadTexture(txt)} );
+      var ball = new THREE.Mesh( geometry, material );
+      ball.position.set(posx, posy, posz)
+      return ball
 }
 
 function do_floor(txt, size_pav, level_pav, scale_pav, sizez, sizex, posx, posz){
@@ -250,6 +49,7 @@ function do_floor(txt, size_pav, level_pav, scale_pav, sizez, sizex, posx, posz)
                  group.add( dict_pav[i] )
           }
     }
+
 
 var make_bulb = function(posx, posy, posz){
     /*
@@ -291,14 +91,60 @@ var make_bulb = function(posx, posy, posz){
     return group_bulb
 }
 
+localPlane = new THREE.Plane( new THREE.Vector3( 0, -1, 0 ), 200 );
+// var globalPlane = new THREE.Plane( new THREE.Vector3( 1, 0, 0 ), 1 );
+// renderer.clippingPlanes = [ globalPlane ];
+// renderer.localClippingEnabled = true;
+// var material = new THREE.MeshPhongMaterial( {
+//     clippingPlanes: [ localPlane ],
+//     clipShadows: true
+// } );
+
+function treillis(txt, size,  x, y, z, angle){
+    /*
+    Treillis
+    */
+    var group_treillis = new THREE.Group();
+    var geom_treillis = new THREE.CubeGeometry( 50, 7, 3 )
+    var material_treillis = new THREE.MeshBasicMaterial({ map: THREE.ImageUtils.loadTexture(txt),
+                        clippingPlanes: [ localPlane ]
+                       }) // "texture/latte0.jpg"
+    simple_board0 = new THREE.Mesh( geom_treillis, material_treillis )
+    dic_treillis = {}
+    scale_treillis = size
+    dic_treillis[0] = simple_board0.clone()
+    dic_treillis[1] = simple_board0.clone()
+    //dic_treillis[0].rotation.set(Math.PI/2,angle,Math.PI/3)
+    dic_treillis[0].rotation.set(0,0,Math.PI/3)
+    dic_treillis[0].position.set(x, y, z)  // 180,180,-10
+    dic_treillis[0].scale.set(scale_treillis,scale_treillis*0.1,scale_treillis*0.1)
+    dic_treillis[1].rotation.set(0,0,-Math.PI/3)
+    dic_treillis[1].position.set(x, y, z)  // 180,180,-10
+    dic_treillis[1].scale.set(scale_treillis,scale_treillis*0.1,scale_treillis*0.1)
+    fact_treill = 30
+    for (i=1; i<20; i++){
+          dic_treillis[2*i] = dic_treillis[0].clone()
+          dic_treillis[2*i].position.y = dic_treillis[0].position.y-2*i
+          dic_treillis[2*i+1] = dic_treillis[1].clone()
+          dic_treillis[2*i+1].position.y = dic_treillis[1].position.y-2*i
+          if (i<10){
+                dim0 = scale_treillis+(i-10)/fact_treill
+                dic_treillis[2*i+1].scale.set(dim0,dim0*0.1,scale_treillis*0.1)
+                dic_treillis[2*i].scale.set(dim0,dim0*0.1,scale_treillis*0.1)
+          }
+          group_treillis.add( dic_treillis[2*i] )
+          group_treillis.add( dic_treillis[2*i+1] )
+    }
+    return group_treillis
+}
+
 function persians(txt, size,  x, y, z, angle){
     /*
     Persians
     */
     var group_persian = new THREE.Group();
     var geom_board = new THREE.CubeGeometry( 50, 7, 3 )
-    var texture = new THREE.TextureLoader().load( txt );
-    var material_board = new THREE.MeshBasicMaterial({ map: texture }) // "texture/latte0.jpg"
+    var material_board = new THREE.MeshBasicMaterial({ map: THREE.ImageUtils.loadTexture(txt) }) // "texture/latte0.jpg"
     simple_board0 = new THREE.Mesh( geom_board, material_board )
     dic_board = {}
     scale_board = size
@@ -333,8 +179,7 @@ function column_torsed(txt, size,  x, y, z, nbcubes){
       var group_column = new THREE.Group();
       //scene.add( group_column );
       var geom_cube = new THREE.CubeGeometry( size, size, size )
-      var texture = new THREE.TextureLoader().load( txt );
-      var material_cube = new THREE.MeshBasicMaterial({ map: texture})
+      var material_cube = new THREE.MeshBasicMaterial({ map: THREE.ImageUtils.loadTexture(txt) })
       cube = new THREE.Mesh( geom_cube, material_cube )
       cube.position.set(x, y, z)
 
@@ -367,6 +212,10 @@ function pavage(txt, size,  x, z, y, roty){
       /*
       Pavage
       */
+      // var geom = new THREE.PlaneGeometry( size, size, size);
+      // var texture = new THREE.TextureLoader().load( txt );
+      // var mat= new THREE.MeshBasicMaterial( { map: texture, overdraw: true } );
+      // var pav = new THREE.Mesh( geom, mat); // , new THREE.SphericalReflectionMapping()
 
       var texture = new THREE.TextureLoader().load( txt );
       var geom_pav = new THREE.CubeGeometry( size, size, 3 )
@@ -398,47 +247,9 @@ var bulblight = function(x,y,z){
 	  return bulbLight
 }
 
-function tube_scale(txt, sizex, sizey, posx, posy, posz){
-  /*
-  rambarde
-  */
-
-          function CustomSinCurve( scale ) {
-
-          THREE.Curve.call( this );
-
-          this.scale = ( scale === undefined ) ? 1 : scale;
-
-        }
-
-        CustomSinCurve.prototype = Object.create( THREE.Curve.prototype );
-        CustomSinCurve.prototype.constructor = CustomSinCurve;
-
-        CustomSinCurve.prototype.getPoint = function ( t ) {
-          var length = 5
-          var tx =  0;
-          var ty =  t * length+ 0.1*Math.sin( 12 * Math.PI * t );
-          var tz = 1.9 *  t * length;
-
-          return new THREE.Vector3( tx, ty, tz ).multiplyScalar( this.scale );
-
-        };
-
-        var path = new CustomSinCurve( 20 );
-        var geometry = new THREE.TubeGeometry( path, 200, sizex, sizey, false );
-        //var material = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
-        var texture = new THREE.TextureLoader().load( txt );
-        var material = new THREE.MeshBasicMaterial( {color: 0x000000} ); // { map: texture}
-
-        var mesh = new THREE.Mesh( geometry, material );
-        mesh.position.set(posx, posy, posz)
-        return mesh
-
-}
-
 function scale(txt, rot, posx, posy, posz, heighty, nbscales){
     	/*
-      Scale, escaliers
+      Scale
     	*/
     	hstep = 5
     	lstep = 10
@@ -449,8 +260,7 @@ function scale(txt, rot, posx, posy, posz, heighty, nbscales){
     	group_scale = new THREE.Group();
     	scene.add( group_scale );
     	var geom_step = new THREE.CubeGeometry( wstep, hstep, lstep )
-      var texture = new THREE.TextureLoader().load( txt );
-    	var material_step = new THREE.MeshBasicMaterial({ map: texture })
+    	var material_step = new THREE.MeshBasicMaterial({ map: THREE.ImageUtils.loadTexture(txt) })
     	step0 = new THREE.Mesh( geom_step, material_step )
     	step0.position.set(sx,sy,sz);
     	for ( i=0; i<nbscales; i++){
@@ -460,15 +270,6 @@ function scale(txt, rot, posx, posy, posz, heighty, nbscales){
     	}
     	group_scale.rotation.y = rot; // 3*Math.PI / 2;
     	group_scale.position.set(posx, posy, posz); //420,0,0
-
-      ztube = -10
-
-      ramb0 = tube_scale(txt, 1,2, 20,ztube,-40)
-      ramb1 = tube_scale(txt, 1,2, -20,ztube,-40)
-
-
-      group_scale.add( ramb1 );
-      group_scale.add( ramb0 );
 }
 
 var building3 = function(){
@@ -735,6 +536,7 @@ var building3 = function(){
                group.add( dict_floors0[i] )
         }
 
+
       // Other floors
 
         level_floor_inside1 = 25
@@ -767,7 +569,7 @@ var building3 = function(){
           group.add( dict_cubes[i] )
         }
 
-        //----- Columns, pillars dans maison principale
+        //----- Columns, pillars
 
         column_dic = {}
         column_dic[0] = column_torsed("texture/adesivo-de-parede-azulejos-05-cozinha.jpg", 5, 45,27,29, 10) // door
@@ -837,7 +639,7 @@ var building3 = function(){
              scene.add( dict_taps[i] )
         }
 
-        // Tableaux à l'intérieur, Botero
+        // Tableaux à l'intérieur, botero
 
         dict_tabl_inside = {}
         big_tabl_size = 35
@@ -860,7 +662,7 @@ var building3 = function(){
              scene.add( dict_tabl_inside[i] )
         }
 
-        //   Bulb light avec cône
+        //   Bulb light
 
         bulbMat = new THREE.MeshStandardMaterial ( {
             emissive: 0xffffee,
@@ -890,21 +692,13 @@ var building3 = function(){
               scene.add( dict_bulb[i] )
         }
 
-        // Other floors, floor outside with checkers, outside Botero, sol, damiers
+        // Other floors, floor outside with checkers, outside Botero
 
-        do_floor("texture/166280_2322900.jpg", 50, 25, 0.5, 20, 7, 110, -140)  // Damiers après BOtero
-        do_floor("texture/166280_2322900.jpg", 75, 135, 0.5, 2,1, 125, -20)  // second floor Damier
+        do_floor("texture/166280_2322900.jpg", 50, 25, 0.5, 20, 7, 110, -140)
+        do_floor("texture/166280_2322900.jpg", 75, 135, 0.5, 2,1, 125, -20)  // second floor
         do_floor("texture/489842808.jpg", 40, 75, 0.5, 5,2, 65, -10) // first floor
-        do_floor("texture/im-4-stickers-deco-Mosaiques-12x12cm-style-AzulejosCarreaux-de-ciment-Vert.jpg", 50, 25, 0.5, 10,4, 30, 200) // Sol pour les tours
-         // azulejos-oscuro.jpg // 166280_2322900.jpg / im-4-stickers-deco-Mosaiques-12x12cm-style-AzulejosCarreaux-de-ciment-Vert.jpg
-         // do_floor("texture/Mosaique-pate-de-verre-CY29-VERT-TURQUOISE-zoom.jpg", 75, 135, 0.5, 2,1, 175, -20) //
-         // do_floor("texture/Mosaique-pate-de-verre-CY08-ROSE-PARME-zoom.jpg", 75, 75, 0.5, 2,1, 175, -20) //
-         do_floor("texture/azulejos-oscuro.jpg", 75, 135, 0.5, 1,1, 175, -22) // second floor
-         do_floor("texture/azulejos-oscuro.jpg", 75, 75, 0.5, 2,3, 100, -40) // first floor white
-         do_floor("texture/166280_2322900.jpg", 78, 135, 0.5, 1,4, 60, -75) // second floor
-         // mosaique-emaux-blanc-pur-103-pas-zoom.jpg
 
-        // Tableaux rez de chaussée Shadoks
+        // Tableaux rez de chaussée
 
         dict_tabl_ff = {}
         big_tabl_size_ff = 8
@@ -932,7 +726,7 @@ var building3 = function(){
         for (i=1; i<Object.keys(dict_tabl_ff).length+1; i++){
              scene.add( dict_tabl_ff[i] )
         }
-        //----- The four columns, pillars, grandes tours en porcelaine
+        //----- The four columns, pillars
 
         var column_tower_dic = {}
 
@@ -940,88 +734,31 @@ var building3 = function(){
         height_tow = 20
         var column_tower_base = column_torsed("texture/azulejos_portugal.jpg", 15, 0,0,0, height_tow) // door
         for (i=0;i<4; i++){
-            column_tower_dic[2*i] = column_tower_base.clone()
-            column_tower_dic[2*i].position.set(45,10,80+space_col*i)
-            column_tower_dic[2*i+1] = column_tower_base.clone()
-            column_tower_dic[2*i+1].position.set(80,10,80+space_col*i)
+          column_tower_dic[2*i] = column_tower_base.clone()
+          column_tower_dic[2*i].position.set(45,10,80+space_col*i)
+          column_tower_dic[2*i+1] = column_tower_base.clone()
+          column_tower_dic[2*i+1].position.set(80,10,80+space_col*i)
         }
 
         for (i=0; i<Object.keys(column_tower_dic).length+1; i++){
           group.add( column_tower_dic[i] )
         }
 
-        //--------- Ball
-
+        //--------- ball
         posz_ball = -10
         size_ball = 2
         ball_dic = {}
         ball_dic[0] = ball("texture/verre-souffle-bariole-bar014.jpg", size_ball, 50,30, posz_ball-5)
         ball_dic[1] = ball("texture/bariolé_clair.jpeg", size_ball, 40,30, posz_ball+5)
         ball_dic[2] = ball("texture/verre-souffle-bariole-bar233.jpg", size_ball, 30,30, posz_ball-3)
-        for (i=0; i < Object.keys(ball_dic).length+1; i++){
-              group.add( ball_dic[i] )
+        for (i=0; i<Object.keys(ball_dic).length+1; i++){
+          group.add( ball_dic[i] )
         }
 
         //---------------
         ceil = ceiling_white(90,90, 50,66.5,-20)
         group.add( ceil )
 
-        //------------- Road
-
-        //road_white(10, 5, 0, 40, 100)
-
-        // Meander
-
-        // meander("texture/water_water.jpg", 5,700, -1000,22,50, 80, 500, 400, 0)
-
-        // Grille ondulant dans les deux sens
-
-        var dic_grille = {}
-        height_grid = 63
-        height_grid1 = 120
-        // for (i=0; i<5; i++){
-        //     dic_grille[i] = wavy_grid(2,2, 0,height_grid,-85+i*13)
-        //     dic_grille[i].rotation.set(0,Math.PI/2,0)
-        // }
-        dic_grille[0] = wavy_grid(2,2, 0,height_grid,-85)
-        dic_grille[0].rotation.set(0,Math.PI/2,0)
-        dic_grille[1] = wavy_grid(2,2, 0,height_grid,-72)
-        dic_grille[1].rotation.set(0,Math.PI/2,0)
-        dic_grille[2] = wavy_grid(2,2, 0,height_grid,-59)
-        dic_grille[2].rotation.set(0,Math.PI/2,0)
-        dic_grille[3] = wavy_grid(2,2, 0,height_grid,-46)
-        dic_grille[3].rotation.set(0,Math.PI/2,0)
-        dic_grille[4] = wavy_grid(2,2, 0,height_grid,-33)
-        dic_grille[4].rotation.set(0,Math.PI/2,0)
-        dic_grille[5] = wavy_grid(2,2, 0,height_grid,-20)
-        dic_grille[5].rotation.set(0,Math.PI/2,0)
-        dic_grille[6] = wavy_grid(2,2, 33,height_grid,0)
-        dic_grille[7] = wavy_grid(2,2, 20,height_grid,0)
-        grid_up_z = 0
-        dic_grille[8] = wavy_grid(2,2, 69,height_grid1,grid_up_z)
-        dic_grille[9] = wavy_grid(2,2, 82,height_grid1,grid_up_z)
-        dic_grille[10] = wavy_grid(2,2, 56,height_grid1,grid_up_z)
-
-        for (i=0; i < Object.keys(dic_grille).length+1; i++){
-              group.add( dic_grille[i] )
-              }
-        // sgrid = simple_grid(-100,30,70)
-        // group.add( sgrid )
-
-        //----------- Cages
-        // cage0 = cage(-100,30,70)
-        // group.add( cage0 )
-
-        dic_cage[1] = cage(60,80,90) // Ascenseur au milieu des tours..
-        dic_cage[2] = cage(60,130,150) // Ascenseur au milieu des tours..
-        dic_cage[3] = cage(60,180,210) // Ascenseur au milieu des tours..
-        for (i=1; i < Object.keys(dic_cage).length+1; i++){
-              dic_cage_speed[i] = 5 + Math.random()*3
-              scene.add( dic_cage[i] )
-              }
-        sg_up0 = simple_grid(140,75,-20, "textures/hardwood2_diffuse.jpg")
-        sg_up0.scale.set(2.5,2.5,2.5)
-        group.add( sg_up0 )
 
 
 } // end group building
