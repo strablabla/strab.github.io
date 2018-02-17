@@ -177,14 +177,28 @@ function wavy_grid(sizex, sizey, posx, posy, posz){
 
 }
 
+function gift(txt, size, posx, posy, posz, ang){
+      /*
+      Gift
+      */
+      sgift = size // size cube
+      var geom_gift = new THREE.CubeGeometry( sgift, sgift, sgift )
+      var texture = new THREE.TextureLoader().load(txt) // gift-boxes.jpg // roughness_map.jpg
+      var mat_gift = new THREE.MeshBasicMaterial({ map: texture})
+      gift0 = new THREE.Mesh( geom_gift, mat_gift )
+      gift0.position.set(posx, posy, posz)
+      gift0.rotation.y = ang
+      return gift0
+}
 
-function puppet(posx, posy, posz, ang){
+function puppet(posx, posy, posz, ang, colbody, colhead, colarm, colleg){
        /*
        Puppet
        */
+       colb = colbody || 0xffff00
        var group_puppet = new THREE.Group()
        var geom_body = new THREE.CylinderBufferGeometry( 5, 5, 15, 32 );
-       var mat_body = new THREE.MeshBasicMaterial( {color: 0xffff00} );
+       var mat_body = new THREE.MeshBasicMaterial( {color: colb} );
        var body = new THREE.Mesh( geom_body, mat_body );
        //---
        var geom_arm = new THREE.CylinderBufferGeometry( 5, 5, 20, 32 );
@@ -197,7 +211,7 @@ function puppet(posx, posy, posz, ang){
        //---
        bodyscale = 10
        body.scale.set( bodyscale, bodyscale, bodyscale )
-       body.position.set(-50,5,40)
+       body.position.set(-40,5,-0)
        group_puppet.add(body)
        //-------------------
        var hand1 = arm.clone()
@@ -1120,10 +1134,12 @@ var building3 = function(){
 
         //---------- Puppet
 
-        pup0 = puppet(40,30,-20,0)
+        pup0 = puppet(40,30,-20,0) // , 0xffffee
         pup0.rotation.y = 3*Math.PI/2
         scene.add( pup0 )
 
+        gift0 = gift("texture/gift-boxes.jpg", 5, 37,30,-10, Math.PI/3)
+        scene.add( gift0 )
 
         var chemi = cheminey(190, 200, -190)
         //chemi.scale.set(20,20,20)
@@ -1141,15 +1157,7 @@ var building3 = function(){
             scene.add(dic_smoke[i])
         }
 
-        // elarg = 2
-        //
-        //     var geom_smoke = new THREE.TorusGeometry( 10, 1+elarg, 5+0.5*elarg, 100 );
-        //     var mat_smoke = new THREE.MeshBasicMaterial( { color: 0xffffff } );
-        //     dic_smoke[1] = new THREE.Mesh( geom_smoke, mat_smoke );
-        //     dic_smoke[1].rotation.x = Math.PI/2
-        //     dic_smoke[1].position.set(190, 200+40+15, -190)
-        //     //dic_smoke[1].scale.set(20,20,20)
-        //     scene.add(dic_smoke[1])
+
 
 
 
