@@ -11,6 +11,8 @@ var param_bulb = 0
 var moving = false
 var dic_cage = {}
 var dic_cage_speed = {}
+var dic_smoke = {}
+var dic_smoke_speed = {}
 
 window.onload = function(event) {
 
@@ -77,7 +79,7 @@ window.onload = function(event) {
       camera = new THREE.PerspectiveCamera(90, window.innerWidth/window.innerHeight, 0.01, 10000);
       //camera.position.set(-500, 400, -200);
       // camera.position.set(dist/2, dist/2, dist/2);
-      camera.position.set(220,170,60);
+      camera.position.set(60,240,-10);
       scene.add(camera);
 
       controls = new THREE.OrbitControls(camera, element);
@@ -112,9 +114,6 @@ window.onload = function(event) {
 
       // Buildings
 
-      var nb_buildings = 100
-      var esp = 100
-      var dist_inter_build = 1500
       building3()
 
       /* ground  */
@@ -189,6 +188,34 @@ window.onload = function(event) {
               }
               dic_cage[i].position.y += dic_cage_speed[i]*0.1
             }
+
+
+      // Moving smoke
+
+      maxlev_smoke = 330
+      for (i=1; i < Object.keys(dic_smoke).length+1; i++){
+              if (dic_smoke[i].position.y < maxlev_smoke){
+                  dic_smoke_speed[i] *= 1;
+              }
+              else{
+                  dic_smoke[i].position.y = 240;
+                  //dic_smoke[i].mesh.setGeometry(THREE.TorusGeometry( 10, 1, 5, 100 ));
+                  // var geom_smoke = new THREE.TorusGeometry( 10, 1, 5, 100 );
+                  // var mat_smoke = new THREE.MeshBasicMaterial( { color: 0xffffff } );
+                  // dic_smoke[i] = new THREE.Mesh( geom_smoke, mat_smoke );
+                  // dic_smoke[i].rotation.x = Math.PI/2
+                  // dic_smoke[i].position.set(190, 200+40, -190)
+              }
+
+              dic_smoke[i].position.y += dic_smoke_speed[i]*0.2
+              //dic_smoke[i].mesh.setGeometry(torusGeometry);
+              fact_smoke = dic_smoke[i].position.y/250
+              //fact_smokey = dic_smoke[i].position.y/200
+              dic_smoke[i].scale.set(fact_smoke,fact_smoke,fact_smoke)
+
+            }
+
+      //dic_smoke[1].position.y += dic_smoke_speed[1]*0.03
 
 
       bulbMat.emissiveIntensity = bulbLight.intensity / Math.pow( 0.02, 2.0 ); // convert from intensity to irradiance at bulb surface
