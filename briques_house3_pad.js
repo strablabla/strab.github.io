@@ -170,7 +170,6 @@ window.onload = function(event) {
                   var direction = camera.getWorldDirection();
                   distance = 2;
                   camera.position.add( direction.multiplyScalar(distance) );
-                }
             } // end if key code
       })
 
