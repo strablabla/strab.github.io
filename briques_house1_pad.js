@@ -2,19 +2,16 @@
 var camera, scene, renderer;
 var effect, controls;
 var element, container;
-var bulbLight, bulbMat, groundMat, hemiLight
+var bulbLight, bulbMat, floorMat, hemiLight
 var dist = 500
 var size_cube = 5
 var size_house_piece = 50
 var size_bulb = 5
 var param_bulb = 0
 var moving = false
-var dic_cage = {}
-var dic_cage_speed = {}
-var dic_smoke = {}
-var dic_smoke_speed = {}
 
 window.onload = function(event) {
+
 
     // ref for lumens: http://www.power-sure.com/lumens.htm
     var bulbLuminousPowers = {
@@ -60,7 +57,7 @@ window.onload = function(event) {
       renderer.gammaInput = true;
       renderer.gammaOutput = true;
       renderer.shadowMap.enabled = true;
-      //-------------Fog
+      //-------------
       element = renderer.domElement;
       container = document.getElementById('container');
       container.appendChild(element);
@@ -68,25 +65,21 @@ window.onload = function(event) {
       effect = new THREE.StereoEffect(renderer);
 
       scene = new THREE.Scene();
-      scene.fog = new THREE.Fog( 0xffffff, 0, 1000 );
+      scene.fog = new THREE.Fog( 0xffffff, 0, 750 );
       hemiLight = new THREE.HemisphereLight(0xffffff, 0x000000, 0.6);
       scene.add( hemiLight );
 
-      // var light = new THREE.AmbientLight( 0xffffff , 100000); // soft white light
-      // scene.add( light );
-
       camera = new THREE.PerspectiveCamera(90, window.innerWidth/window.innerHeight, 0.01, 10000);
       //camera.position.set(-500, 400, -200);
-      // camera.position.set(dist/2, dist/2, dist/2);
-      camera.position.set(40,180,-260);
+      camera.position.set(dist/2, dist/2, dist/2);
       scene.add(camera);
 
       controls = new THREE.OrbitControls(camera, element);
       // controls.rotateUp(Math.PI / 4);
       controls.target.set(
-          camera.position.x + 0.1,
-          camera.position.y,
-          camera.position.z
+        camera.position.x + 0.1,
+        camera.position.y,
+        camera.position.z
       );
       controls.noZoom = true;
       controls.noPan = true;
@@ -106,6 +99,28 @@ window.onload = function(event) {
 
    window.addEventListener('deviceorientation', setOrientationControls, true);
 
+   //   Bulb light
+
+   bulbMat = new THREE.MeshStandardMaterial ( {
+       emissive: 0xffffee,
+       emissiveIntensity: 1,
+       color: 0x000000
+      });
+
+     var bulbGeometry = new THREE.SphereGeometry( size_bulb, 16, 8 );
+     bulbLight = new THREE.PointLight( 0xffee88, 1, 100, 2 );
+     bulbLight.add( new THREE.Mesh( bulbGeometry, bulbMat ) );
+     bulbLight.castShadow = true;
+     bulbLight.position.set(  60, 50, -60  ); // 60, 50, -60
+     scene.add( bulbLight );
+
+     var bulbGeometry = new THREE.SphereGeometry( size_bulb, 16, 8 );
+     bulbLight = new THREE.PointLight( 0xffee88, 1, 100, 2 );
+     bulbLight.add( new THREE.Mesh( bulbGeometry, bulbMat ) );
+     bulbLight.castShadow = true;
+     bulbLight.position.set(  200, 50, -60  ); // 60, 50, -60
+     scene.add( bulbLight );
+
     // Sky
 
      var size_sphere = 1000
@@ -113,36 +128,26 @@ window.onload = function(event) {
 
       // Buildings
 
-      building3()
+      var nb_buildings = 100
+      var esp = 100
+      var dist_inter_build = 1500
+      building2()
 
-      /* ground  */
-
-      size_ground = 3000
-      var geometry = new THREE.PlaneGeometry( size_ground, size_ground, 1, 1 );
-      //var material = new THREE.MeshBasicMaterial( { color: 0x00ffff } );
-      //var material = new THREE.MeshBasicMaterial( { color: 0x999966 } );
-      var material = new THREE.MeshBasicMaterial( { color: 0xffeecc } );
-
-      material.opacity = 0.001
-      var ground = new THREE.Mesh( geometry, material );
-      ground.position.y = 20;
-      ground.material.side = THREE.DoubleSide;
-      ground.rotation.x = Math.PI/2;
-      scene.add( ground );
-
+      make_ground(3000)
+      var forwardstep = 10
       $(document).keydown(function(event){
 
-          if (event.keyCode == "y".charCodeAt(0)-32){
-                var direction = camera.getWorldDirection();
-                distance = -2;
-                camera.position.add( direction.multiplyScalar(distance) );
-            } // end if key code
-            if (event.keyCode == "t".charCodeAt(0)-32){
+            if (event.keyCode == "y".charCodeAt(0)-32){
                   var direction = camera.getWorldDirection();
-                  distance = 2;
+                  distance = -forwardstep;
                   camera.position.add( direction.multiplyScalar(distance) );
               } // end if key code
-      })
+            if (event.keyCode == "t".charCodeAt(0)-32){
+                    var direction = camera.getWorldDirection();
+                    distance = forwardstep;
+                    camera.position.add( direction.multiplyScalar(distance) );
+                } // end if key code
+        })
 
       window.addEventListener('resize', resize, false);
       setTimeout(resize, 1);
@@ -178,61 +183,14 @@ window.onload = function(event) {
           camera.position.add( direction.multiplyScalar(distance) );
       }
 
-
-
       renderer.toneMappingExposure = Math.pow( params.exposure, 5.0 ); // to allow for very bright scenes.
       renderer.shadowMap.enabled = params.shadows;
 
       if( params.shadows !== previousShadowMap ) {
         //   material.needsUpdate = true;
-          //groundMat.needsUpdate = true;
+          //floorMat.needsUpdate = true;
           previousShadowMap = params.shadows;
       }
-
-      // Moving cages up and down
-
-      for (i=1; i < Object.keys(dic_cage).length+1; i++){
-              if (dic_cage[i].position.y < 400){
-                  dic_cage_speed[i] *= 1;
-              }
-              else{
-                  dic_cage_speed[i] *= -1;
-              }
-              if (dic_cage[i].position.y < 30){
-                dic_cage_speed[i] *= -1;
-              }
-              dic_cage[i].position.y += dic_cage_speed[i]*0.1
-            }
-
-
-      // Moving smoke
-
-      //maxlev_smoke = 330
-      maxlev_smoke = 550
-      for (i=1; i < Object.keys(dic_smoke).length+1; i++){
-              if (dic_smoke[i].position.y < maxlev_smoke){
-                  dic_smoke_speed[i] *= 1;
-              }
-              else{
-                  dic_smoke[i].position.y = 240;
-                  //dic_smoke[i].mesh.setGeometry(THREE.TorusGeometry( 10, 1, 5, 100 ));
-                  // var geom_smoke = new THREE.TorusGeometry( 10, 1, 5, 100 );
-                  // var mat_smoke = new THREE.MeshBasicMaterial( { color: 0xffffff } );
-                  // dic_smoke[i] = new THREE.Mesh( geom_smoke, mat_smoke );
-                  // dic_smoke[i].rotation.x = Math.PI/2
-                  // dic_smoke[i].position.set(190, 200+40, -190)
-              }
-
-              dic_smoke[i].position.y += dic_smoke_speed[i]*0.2
-              //dic_smoke[i].mesh.setGeometry(torusGeometry);
-              fact_smoke = dic_smoke[i].position.y/250
-              //fact_smokey = dic_smoke[i].position.y/200
-              dic_smoke[i].scale.set(fact_smoke,fact_smoke,fact_smoke)
-
-            }
-
-      //dic_smoke[1].position.y += dic_smoke_speed[1]*0.03
-
 
       bulbMat.emissiveIntensity = bulbLight.intensity / Math.pow( 0.02, 2.0 ); // convert from intensity to irradiance at bulb surface
       hemiLight.intensity = hemiLuminousIrradiances[ params.hemiIrradiance ];
