@@ -78,6 +78,6 @@ var building_with_brick = function(nb_buildings, esp, dist_inter_build){
 		group.add( wall15 );
 		group.add( wall16 );
 
-
+return group
 
 }
