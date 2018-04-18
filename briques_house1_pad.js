@@ -142,7 +142,7 @@ window.onload = function(event) {
                   distance = -forwardstep;
                   camera.position.add( direction.multiplyScalar(distance) );
               } // end if key code
-            if (event.keyCode == "t".charCodeAt(0)-32){
+            if (event.keyCode == "u".charCodeAt(0)-32){
                     var direction = camera.getWorldDirection();
                     distance = forwardstep;
                     camera.position.add( direction.multiplyScalar(distance) );

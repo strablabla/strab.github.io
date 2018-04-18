@@ -143,7 +143,7 @@ window.onload = function(event) {
                   camera.position.add( direct );
                   //alert(direct.x + '__' + direct.y + '__' + direct.z )
               } // end if key code
-            if (event.keyCode == "t".charCodeAt(0)-32){
+            if (event.keyCode == "u".charCodeAt(0)-32){
                     var direction = camera.getWorldDirection();
                     distance = forwardstep;
                     direct = direction.multiplyScalar(distance)

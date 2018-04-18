@@ -92,21 +92,25 @@ window.onload = function(event) {
           scene.add(cube);
       }
 
-      factscale = 1
-
+      var forwardstep = 10
       $(document).keydown(function(event){
 
+            if (event.keyCode == "y".charCodeAt(0)-32){
+                  var direction = camera.getWorldDirection();
+                  distance = -forwardstep;
+                  direct = direction.multiplyScalar(distance)
+                  camera.position.add( direct );
+                  //alert(direct.x + '__' + direct.y + '__' + direct.z )
+              } // end if key code
+            if (event.keyCode == "u".charCodeAt(0)-32){
+                    var direction = camera.getWorldDirection();
+                    distance = forwardstep;
+                    direct = direction.multiplyScalar(distance)
+                    camera.position.add( direct );
 
 
-          if (event.keyCode == "y".charCodeAt(0)-32){
-                factscale += 0.1
-                if (factscale > 2){factscale = 1}
-                for (i in list_cubes){
-                    var cube = list_cubes[i]
-                    cube.scale.set(factscale, factscale, factscale);
-                }
-            } // end if key code
-      })
+                } // end if key code
+        })
 
       window.addEventListener('resize', resize, false);
       setTimeout(resize, 1);
