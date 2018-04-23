@@ -152,43 +152,43 @@ window.onload = function(event) {
       make_ground(3000)
 
       var forwardstep = 10
-      // $(document).keydown(function(event){
-      //
-      //       if (event.keyCode == "y".charCodeAt(0)-32){
-      //             var direction = camera.getWorldDirection();
-      //             distance = -forwardstep;
-      //             direct = direction.multiplyScalar(distance)
-      //             camera.position.add( direct );
-      //             //alert(direct.x + '__' + direct.y + '__' + direct.z )
-      //         } // end if key code
-      //       if (event.keyCode == "t".charCodeAt(0)-32){
-      //               var direction = camera.getWorldDirection();
-      //               distance = forwardstep;
-      //               direct = direction.multiplyScalar(distance)
-      //               camera.position.add( direct );
-      //
-      //
-      //           } // end if key code
-      //   })
+      $(document).keydown(function(event){
 
-        $(document).keydown(function(event){
-
-              if (event.keyCode == "q".charCodeAt(0)-32){
+            if (event.keyCode == "y".charCodeAt(0)-32){
+                  var direction = camera.getWorldDirection();
+                  distance = -forwardstep;
+                  direct = direction.multiplyScalar(distance)
+                  camera.position.add( direct );
+                  //alert(direct.x + '__' + direct.y + '__' + direct.z )
+              } // end if key code
+            if (event.keyCode == "t".charCodeAt(0)-32){
                     var direction = camera.getWorldDirection();
-                    distance = -forwardstep;
+                    distance = forwardstep;
                     direct = direction.multiplyScalar(distance)
                     camera.position.add( direct );
-                    //alert(direct.x + '__' + direct.y + '__' + direct.z )
+
+
                 } // end if key code
-              if (event.keyCode == "d".charCodeAt(0)-32){
-                      var direction = camera.getWorldDirection();
-                      distance = forwardstep;
-                      direct = direction.multiplyScalar(distance)
-                      camera.position.add( direct );
+        })
 
-
-                  } // end if key code
-          })
+        // $(document).keydown(function(event){
+        //
+        //       if (event.keyCode == "q".charCodeAt(0)-32){
+        //             var direction = camera.getWorldDirection();
+        //             distance = -forwardstep;
+        //             direct = direction.multiplyScalar(distance)
+        //             camera.position.add( direct );
+        //             //alert(direct.x + '__' + direct.y + '__' + direct.z )
+        //         } // end if key code
+        //       if (event.keyCode == "d".charCodeAt(0)-32){
+        //               var direction = camera.getWorldDirection();
+        //               distance = forwardstep;
+        //               direct = direction.multiplyScalar(distance)
+        //               camera.position.add( direct );
+        //
+        //
+        //           } // end if key code
+        //   })
 
       window.addEventListener('resize', resize, false);
       setTimeout(resize, 1);
