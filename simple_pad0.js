@@ -9,6 +9,8 @@ var size_house_piece = 50
 var size_bulb = 5
 var param_bulb = 0
 var moving = false
+var moving_side = false
+var direct_side = 'right'
 
 window.onload = function(event) {
 
@@ -147,13 +149,9 @@ window.onload = function(event) {
         scene.add( column_tower_dic[i] )
       }
 
-      make_ground(3000)
+      make_ground(size_sphere*3)
 
-      perp_horiz = function(vec){
-
-      }
-
-      var forwardstep = 3
+      var forwardstep = 3     // speed for forward movement
       $(document).keydown(function(event){
 
             if (event.keyCode == "y".charCodeAt(0)-32){
@@ -171,20 +169,15 @@ window.onload = function(event) {
                 } // end if key code
             if (event.keyCode == "j".charCodeAt(0)-32){
                     var direction = camera.getWorldDirection();
-                    distance = forwardstep;
-                    direct = direction.multiplyScalar(distance)
-                    var perp0 = new THREE.Vector3( -direct.z, 0, direct.x )
-
-                    camera.position.add( perp0 );
+                    perp0 = new THREE.Vector3( -direction.z, 0, direction.x )
+                    moving_side = !moving_side
+                    direct_side = 'right'
                   } // end if key code
             if (event.keyCode == "h".charCodeAt(0)-32){
                     var direction = camera.getWorldDirection();
-                    distance = forwardstep;
-                    direct = direction.multiplyScalar(distance)
-                    var perp1 = new THREE.Vector3( direct.z,0 , -direct.x )
-                    camera.position.add(perp1);
-
-
+                    perp1 = new THREE.Vector3( direction.z,0 , -direction.x )
+                    moving_side = !moving_side
+                    direct_side = 'left'
                 } // end if key code
         })
 
@@ -239,6 +232,15 @@ window.onload = function(event) {
           var direction = camera.getWorldDirection();
           distance = 2;
           camera.position.add( direction.multiplyScalar(distance) );
+      }
+      if (moving_side){
+          if (direct_side == 'right'){
+              camera.position.add( perp0 );
+          }
+          else{
+             camera.position.add( perp1 );
+          }
+
       }
 
       renderer.toneMappingExposure = Math.pow( params.exposure, 5.0 ); // to allow for very bright scenes.
