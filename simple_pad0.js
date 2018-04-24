@@ -109,8 +109,6 @@ window.onload = function(event) {
         color: 0x000000
        });
 
-
-
       var bulbGeometry = new THREE.SphereGeometry( size_bulb, 16, 8 );
       bulbLight = new THREE.PointLight( 0xffee88, 1, 100, 2 );
       bulbLight.add( new THREE.Mesh( bulbGeometry, bulbMat ) );
@@ -151,7 +149,11 @@ window.onload = function(event) {
 
       make_ground(3000)
 
-      var forwardstep = 10
+      perp_horiz = function(vec){
+
+      }
+
+      var forwardstep = 3
       $(document).keydown(function(event){
 
             if (event.keyCode == "y".charCodeAt(0)-32){
@@ -166,6 +168,21 @@ window.onload = function(event) {
                     distance = forwardstep;
                     direct = direction.multiplyScalar(distance)
                     camera.position.add( direct );
+                } // end if key code
+            if (event.keyCode == "j".charCodeAt(0)-32){
+                    var direction = camera.getWorldDirection();
+                    distance = forwardstep;
+                    direct = direction.multiplyScalar(distance)
+                    var perp0 = new THREE.Vector3( -direct.z, 0, direct.x )
+
+                    camera.position.add( perp0 );
+                  } // end if key code
+            if (event.keyCode == "h".charCodeAt(0)-32){
+                    var direction = camera.getWorldDirection();
+                    distance = forwardstep;
+                    direct = direction.multiplyScalar(distance)
+                    var perp1 = new THREE.Vector3( direct.z,0 , -direct.x )
+                    camera.position.add(perp1);
 
 
                 } // end if key code
