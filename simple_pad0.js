@@ -11,6 +11,7 @@ var param_bulb = 0
 var moving = false
 var moving_side = false
 var direct_side = 'right'
+var shoot = false
 
 window.onload = function(event) {
 
@@ -119,6 +120,14 @@ window.onload = function(event) {
       list_bulbs.push(bulbLight)
       scene.add( bulbLight );
 
+      //------------------
+
+      var bulletGeometry = new THREE.SphereGeometry( size_bulb/5, 16, 8 );
+      bulletLight = new THREE.PointLight( 0xffee88, 1, 100, 2 );
+      bulletLight.add( new THREE.Mesh( bulletGeometry, bulbMat ) );
+      bulletLight.castShadow = true;
+      scene.add( bulletLight );
+
     // Sky
 
      var size_sphere = 1000
@@ -178,6 +187,10 @@ window.onload = function(event) {
                     perp1 = new THREE.Vector3( direction.z,0 , -direction.x )
                     moving_side = !moving_side
                     direct_side = 'left'
+                } // end if key code
+            if (event.keyCode == "z".charCodeAt(0)-32){
+                   direct_shoot = camera.getWorldDirection();
+                   shoot = !shoot
                 } // end if key code
         })
 
@@ -240,8 +253,16 @@ window.onload = function(event) {
           else{
              camera.position.add( perp1 );
           }
-
       }
+      var direction = camera.getWorldDirection();
+
+      if (shoot){
+         bulletLight.position.add(direct_shoot)
+      }
+      else{
+        bulletLight.position.set( camera.position.x+10*direction.x, camera.position.y+10*direction.y, camera.position.z+10*direction.z )
+      }
+
 
       renderer.toneMappingExposure = Math.pow( params.exposure, 5.0 ); // to allow for very bright scenes.
       renderer.shadowMap.enabled = params.shadows;
