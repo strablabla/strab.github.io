@@ -236,6 +236,30 @@ window.onload = function(event) {
                     moving_side = !moving_side
                     direct_side = 'left'
                 } // end if key code
+
+
+
+                if (event.keyCode == "u".charCodeAt(0)-32){           // increase speed (right)
+
+                        if (moving_side){
+                          perp0.multiplyScalar(2)
+                          perp1.multiplyScalar(2)
+                        }
+                        if (moving_front){
+                          direct.multiplyScalar(2)
+                        }
+
+                      } // end if key code
+                if (event.keyCode == "y".charCodeAt(0)-32){            // decrease speed (left)
+                        if (moving_side){
+                          perp0.multiplyScalar(0.5)
+                          perp1.multiplyScalar(0.5)
+                        }
+                        if (moving_front){
+                          direct.multiplyScalar(0.5)
+                        }
+                    } // end if key code
+
             if (event.keyCode == "j".charCodeAt(0)-32){             // shoot
                    direct_shoot = camera.getWorldDirection();
                    direct_shoot.multiplyScalar(10)
