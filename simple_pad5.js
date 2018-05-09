@@ -15,6 +15,10 @@ moving_front = false
 direct_front = 'foreward'
 var shoot = false
 listballs = make_balls()
+listballs_speeds = []
+for ( i=1; i < listballs.length; i++ ){
+  listballs_speeds.push(Math.abs(Math.random()))
+}
 
 window.onload = function(event) {
 
@@ -182,7 +186,7 @@ window.onload = function(event) {
 
       //----------------------------------  Objects to shoot..
 
-      for (i=1;i<listballs.length+1;i++){
+      for ( i=1; i<listballs.length+1; i++ ){
         scene.add( listballs[i] )
       }
 
@@ -202,22 +206,8 @@ window.onload = function(event) {
         u: right
       */
 
-      var forwardstep = 3                                         // speed for forward movement
+      var forwardstep = 1                                            // speed for forward movement
       $(document).keydown(function(event){
-
-            // if (event.keyCode == "z".charCodeAt(0)-32){           // move backward
-            //       var direction = camera.getWorldDirection();
-            //       distance = -forwardstep;
-            //       direct = direction.multiplyScalar(distance)
-            //       camera.position.add( direct );
-            //       //alert(direct.x + '__' + direct.y + '__' + direct.z )
-            //   } // end if key code
-            // if (event.keyCode == "w".charCodeAt(0)-32){           // move foreward
-            //         var direction = camera.getWorldDirection();
-            //         distance = forwardstep;
-            //         direct = direction.multiplyScalar(distance)
-            //         camera.position.add( direct );
-            //     } // end if key code
 
             if (event.keyCode == "z".charCodeAt(0)-32){           // move backward
                   var direction = camera.getWorldDirection();
@@ -225,8 +215,6 @@ window.onload = function(event) {
                   direct_front = 'backward'
                   distance = -forwardstep;
                   direct = direction.multiplyScalar(distance)
-
-                  //alert(direct.x + '__' + direct.y + '__' + direct.z )
               } // end if key code
             if (event.keyCode == "w".charCodeAt(0)-32){           // move foreward
                     var direction = camera.getWorldDirection();
@@ -308,8 +296,13 @@ window.onload = function(event) {
           }
       }
 
-
       var direction = camera.getWorldDirection();
+      for ( i=1; i < listballs.length; i++ ){
+        listballs[i].position.y += listballs_speeds[i]; // Math.random()*
+        if ( listballs[i].position.y > 300 ){
+          listballs[i].position.y = 50;
+        }
+      }
 
       if (shoot){                                             // shooting case
          bulletLight.position.add(direct_shoot)               // bullet progression
