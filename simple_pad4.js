@@ -130,7 +130,7 @@ window.onload = function(event) {
 
       //var geom_gun = new THREE.CylinderGeometry( 1, 1, 3, 32 );
       var geom_gun = new THREE.BoxGeometry( 1, 1, 3 );
-      var mat_gun = new THREE.MeshBasicMaterial( {color: 0xffff00} );
+      var mat_gun = new THREE.MeshBasicMaterial( {color: 0xff0000} );
       gun = new THREE.Mesh( geom_gun, mat_gun );
       gun.rotation.x = Math.PI/2
 
