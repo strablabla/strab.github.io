@@ -299,8 +299,9 @@ window.onload = function(event) {
       var direction = camera.getWorldDirection();
       for ( i=1; i < listballs.length; i++ ){
         listballs[i].position.y += listballs_speeds[i]; // Math.random()*
-        if ( listballs[i].position.y > 300 ){
-          listballs[i].position.y = 50;
+        if ( listballs[i].position.y > 300 ||  listballs[i].position.y < 10){
+          listballs_speeds[i] *=-1;
+          //listballs[i].position.y = 50;
         }
       }
 
