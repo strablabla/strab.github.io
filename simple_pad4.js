@@ -11,6 +11,8 @@ var param_bulb = 0
 var moving = false
 var moving_side = false
 var direct_side = 'right'
+moving_front = false
+direct_front = 'foreward'
 var shoot = false
 listballs = make_balls()
 
@@ -203,18 +205,36 @@ window.onload = function(event) {
       var forwardstep = 3                                         // speed for forward movement
       $(document).keydown(function(event){
 
+            // if (event.keyCode == "z".charCodeAt(0)-32){           // move backward
+            //       var direction = camera.getWorldDirection();
+            //       distance = -forwardstep;
+            //       direct = direction.multiplyScalar(distance)
+            //       camera.position.add( direct );
+            //       //alert(direct.x + '__' + direct.y + '__' + direct.z )
+            //   } // end if key code
+            // if (event.keyCode == "w".charCodeAt(0)-32){           // move foreward
+            //         var direction = camera.getWorldDirection();
+            //         distance = forwardstep;
+            //         direct = direction.multiplyScalar(distance)
+            //         camera.position.add( direct );
+            //     } // end if key code
+
             if (event.keyCode == "z".charCodeAt(0)-32){           // move backward
                   var direction = camera.getWorldDirection();
+                  moving_front = !moving_front
+                  direct_front = 'backward'
                   distance = -forwardstep;
                   direct = direction.multiplyScalar(distance)
-                  camera.position.add( direct );
+
                   //alert(direct.x + '__' + direct.y + '__' + direct.z )
               } // end if key code
             if (event.keyCode == "w".charCodeAt(0)-32){           // move foreward
                     var direction = camera.getWorldDirection();
+                    moving_front = !moving_front
+                    direct_front = 'foreward'
                     distance = forwardstep;
                     direct = direction.multiplyScalar(distance)
-                    camera.position.add( direct );
+
                 } // end if key code
             if (event.keyCode == "d".charCodeAt(0)-32){           // move right
                     var direction = camera.getWorldDirection();
@@ -276,6 +296,19 @@ window.onload = function(event) {
              camera.position.add( perp1 );
           }
       }
+      //
+      if (moving_front){                           // move backward of foreward
+          if (direct_front == 'foreward'){         // moving foreward
+
+            camera.position.add( direct );
+          }
+          else{                                     // moving backward
+
+            camera.position.add( direct );
+          }
+      }
+
+
       var direction = camera.getWorldDirection();
 
       if (shoot){                                             // shooting case
