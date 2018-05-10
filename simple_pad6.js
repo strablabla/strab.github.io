@@ -19,8 +19,8 @@ listballs_speeds = []
 for ( i=1; i < listballs.length; i++ ){
   listballs_speeds.push(Math.abs(Math.random()))
 }
-list_expl = []
-list_expl_speed = []
+// list_expl = []
+// list_expl_speed = []
 speed_explo = 0.6
 explo = false
 
@@ -357,6 +357,9 @@ window.onload = function(event) {
 
                scene.remove( listballs[i] );                  // remove the ball from the scene
 
+               list_expl = []
+               list_expl_speed = []
+
                ball = expl( listballs[i] )
 
                for ( i=1; i < 7; i++ ){
@@ -364,9 +367,8 @@ window.onload = function(event) {
                   list_expl.push(newball)
                   scene.add(newball)
                }
-
                explo = true
-
+               explo_count = 0
               }
          }
       }
@@ -381,19 +383,21 @@ window.onload = function(event) {
                           camera.position.z + direction.z/factgun )
         gun.lookAt(camera.position);                                  // orienting gun
         if (explo){
-
+          explo_count += 1
           list_expl[0].position.y += speed_explo
           list_expl[1].position.y += -speed_explo
           list_expl[2].position.x += speed_explo
           list_expl[3].position.x += -speed_explo
           list_expl[4].position.z += speed_explo
           list_expl[5].position.z += -speed_explo
-          //ball.position.y += -1
-          //list_expl[i].position.y += -1
-            // for ( i=1; i < list_expl.length; i++ ){
-            //   list_expl[i].position.add(list_expl_speed[i])
-            // }
-        }
+          if (explo_count == 50){
+            explo = false
+            for ( i=0; i < list_expl.length ; i++ ){
+                scene.remove( list_expl[i] );
+                }
+            } // end count
+
+        }// end if explo
 
       } // end else
 
