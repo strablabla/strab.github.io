@@ -28,6 +28,7 @@ explo = false
 var factgun = 2
 count_attack = 0
 list_attacks = []
+count_bullet_attack = 0
 
 
 var expl=function(obj){
@@ -336,8 +337,8 @@ window.onload = function(event) {
 
       if (count_attack == 100){
             numball = Math.floor(Math.random() * listballs.length);
-            var newsize = 2
-            listballs[numball].scale.set(newsize, newsize, newsize)
+            var newsize = 10
+            //listballs[numball].scale.set(newsize, newsize, newsize)
 
             var att_dir = new THREE.Vector3(); // attack direction
             att_dir.subVectors( listballs[numball].position, camera.position )
@@ -346,22 +347,31 @@ window.onload = function(event) {
 
             var geometry = new THREE.SphereGeometry( 2, 32, 32 );
             //var texture = new THREE.TextureLoader().load( "texture/azulejos_portugal.jpg" );
-            var texture = new THREE.TextureLoader().load( "texture/bariolé_clair.jpeg" )
+            var texture = new THREE.TextureLoader().load( "texture/mosaique_noire.jpg" )
             //var texture = new THREE.TextureLoader().load( "textures/hardwood2_diffuse.jpg" );
             var material = new THREE.MeshBasicMaterial( { map: texture } );
             var balloon = new THREE.Mesh( geometry, material );
             balloon.position.set(pos_att.x, pos_att.y, pos_att.z)  // setting the position
             scene.add(balloon)
-            list_attacks.push([balloon, att_dir.normalize().multiplyScalar(-1), pos_att])
+            list_attacks.push([balloon, att_dir.normalize().multiplyScalar(-1)])
 
             count_attack = 0
       }
       else{
             count_attack += 1;
-            for ( i=1; i < list_attacks.length; i++ ){
-                 list_attacks[i][0].position.add(list_attacks[i][1])
+            for ( i=0; i < list_attacks.length; i++ ){
+                 list_attacks[i][0].position.add(list_attacks[i][1])  // moving attack bullet
             }
       }
+
+      if (count_bullet_attack == 300){                   // time of duration for attack bullet
+              count_bullet_attack += 1;
+              for ( i=0; i < list_attacks.length; i++ ){
+                   scene.remove(list_attacks[i][0])    // removing attack bullet
+              }
+              list_attacks = []
+              count_bullet_attack = 0
+        }
 
       if (shoot){                                             // shooting case
          bulletLight.position.add(direct_shoot)               // bullet progression
@@ -375,6 +385,7 @@ window.onload = function(event) {
                shoot = !shoot
 
                scene.remove( listballs[i] );                  // remove the ball from the scene
+               listballs.splice(i, 1)
 
                list_expl = []
                list_expl_speed = []
@@ -399,12 +410,12 @@ window.onload = function(event) {
 
         if (explo){
                 explo_count += 1
-                list_expl[0].position.y += speed_explo      // up
-                list_expl[1].position.y += -speed_explo     // down
-                list_expl[2].position.x += speed_explo
-                list_expl[3].position.x += -speed_explo
-                list_expl[4].position.z += speed_explo
-                list_expl[5].position.z += -speed_explo
+                list_expl[0].position.y += speed_explo       // up
+                list_expl[1].position.y += -speed_explo      // down
+                list_expl[2].position.x += speed_explo       // laterally
+                list_expl[3].position.x += -speed_explo      // laterally
+                list_expl[4].position.z += speed_explo       // laterally
+                list_expl[5].position.z += -speed_explo      // laterally
                 if (explo_count == 50){
                             explo = false
                             for ( i=0; i < list_expl.length ; i++ ){

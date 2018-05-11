@@ -5,7 +5,7 @@ var make_balls = function(){
 	*/
   listballs = []
 	sizeball = 10
-	for ( i=1; i < 10; i++ ){
+	for ( i=1; i < 5; i++ ){
 
 				var geometry = new THREE.SphereGeometry( sizeball, 32, 32 );
 				//var texture = new THREE.TextureLoader().load( "texture/azulejos_portugal.jpg" );
