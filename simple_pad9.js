@@ -214,14 +214,29 @@ window.onload = function(event) {
       // floorMesh.material.color.setHex(0xe6ffcc); // 0xfff2e6, 0xffff00
       // scene.add( floorMesh );
 
-      //Create a plane that receives shadows (but does not cast them)
       var planeGeometry = new THREE.PlaneBufferGeometry( size_sphere*3, size_sphere*3, 32, 32 );
-      //var planeMaterial = new THREE.MeshStandardMaterial( { color: 0x00ff00 } )
-      var plane = new THREE.Mesh( planeGeometry ); //, planeMaterial
-      plane.rotation.x = -Math.PI / 2.0;
-      plane.material.color.setHex(0xe6ffcc);
+      //var texture = new THREE.TextureLoader().load( "texture/azulejos_portugal.jpg" );
+      var texture = new THREE.TextureLoader().load( "texture/mosaique_sol.jpg" )
+      //var texture = new THREE.TextureLoader().load( "textures/hardwood2_diffuse.jpg" );
+      texture.wrapT = THREE.RepeatWrapping;
+      texture.wrapS = THREE.RepeatWrapping;
+      texture.repeat.set( 40,40 );
+      //texture.offset.set( 1, 1 );
+      texture.needsUpdate = true;
+      var material = new THREE.MeshBasicMaterial( { map: texture } );
+      var plane = new THREE.Mesh( planeGeometry, material );
       plane.receiveShadow = true;
+      plane.rotation.x = -Math.PI / 2.0;
       scene.add( plane );
+
+      //Create a plane that receives shadows (but does not cast them)
+      // var planeGeometry = new THREE.PlaneBufferGeometry( size_sphere*3, size_sphere*3, 32, 32 );
+      // //var planeMaterial = new THREE.MeshStandardMaterial( { color: 0x00ff00 } )
+      // var plane = new THREE.Mesh( planeGeometry ); //, planeMaterial
+      // plane.rotation.x = -Math.PI / 2.0;
+      // plane.material.color.setHex(0xe6ffcc);
+      // plane.receiveShadow = true;
+      // scene.add( plane );
 
       //----------------------------------  Objects to shoot..
 
